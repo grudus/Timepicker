@@ -12,15 +12,15 @@
 <section class="g-time-wrapper">
     <header class="g-head g-flex">
         <section class="g-head-content">
-            <span class="g-current g-hour g-active">20</span>
+            <span class="g-current g-hour g-active g-pointer" onclick="toggleToHours()">21</span>
             <span class="g-current">:</span>
-            <span class="g-current g-minute">44</span>
+            <span class="g-current g-minute g-pointer" onclick="toggleToMinutes()">37</span>
         </section>
     </header>
 
 
-    <section class="g-clock g-flex">
-
+    <section class="g-clock-wrapper g-flex">
+        <div class="g-clock"></div>
     </section>
 
 
@@ -33,4 +33,6 @@
 
 
 </body>
+
+<script type="text/javascript" src="./index.js"></script>
 </html>

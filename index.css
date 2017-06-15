@@ -15,7 +15,7 @@
 
 .g-flex {
     flex-grow: 1;
-    border: 1px solid red
+    border: 2px solid red
 }
 
 .g-head {
@@ -28,7 +28,7 @@
 
 .g-head-content {
     font-size: 3em;
-    color: #E3F2FD;
+    color: #c7d6e1;
     display: flex;
 }
 
@@ -40,8 +40,18 @@
     margin: 0 2px;
 }
 
-.g-clock {
+.g-clock-wrapper {
     flex-grow: 4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.g-clock {
+    border: 1px solid green;
+    background: #CFD8DC;
+    border-radius: 100%;
+
 }
 
 .g-buttons {
@@ -66,4 +76,6 @@
     background: #CFD8DC;
 }
 
-
+.g-pointer:hover {
+    cursor: pointer;
+}
