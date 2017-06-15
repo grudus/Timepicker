@@ -49,9 +49,15 @@
 
 .g-clock {
     border: 1px solid green;
+    position: relative;
     background: #CFD8DC;
     border-radius: 100%;
+    height: 240px;
+    width: 240px;
+}
 
+.g-clock-item {
+    position: absolute;
 }
 
 .g-buttons {
