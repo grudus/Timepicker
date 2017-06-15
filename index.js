@@ -9,6 +9,7 @@ let Clock = {
     size: {width: 0, height: 0},
     middle: {x: 0, y: 0},
     isMouseDown: false,
+    selected: undefined,
 
     calculateClockFace: () => {
         Clock.size.width = clock.clientWidth;
@@ -39,8 +40,13 @@ let Clock = {
         const tangent = y / x;
         let angle = 90 - toDegrees(Math.atan(tangent));
         if (x < 0) angle += 180;
-        console.log(angle);
 
+        if (Clock.selected)
+            Clock.selected.classList.remove('g-selected');
+
+        const index = Math.round(angle / 30) % 12;
+        Clock.selected = clockItems[index];
+        Clock.selected.classList.add('g-selected')
     }
 };
 

@@ -1,3 +1,7 @@
+body {
+    background: rgba(1, 1, 1, 0.2)
+}
+
 .g-time-wrapper {
     background: honeydew;
     min-width: 300px;
@@ -15,7 +19,7 @@
 
 .g-flex {
     flex-grow: 1;
-    border: 2px solid red
+    background: #80bebebe;
 }
 
 .g-head {
@@ -48,16 +52,28 @@
 }
 
 .g-clock {
-    border: 1px solid green;
     position: relative;
     background: #CFD8DC;
     border-radius: 100%;
     height: 240px;
     width: 240px;
+    cursor: default;
 }
 
 .g-clock-item {
     position: absolute;
+    border-radius: 100%;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    padding: 10px;
+    user-select: none;
+    cursor: default;
+}
+
+.g-clock-item.g-selected {
+    background: #1976D2;
+    color: whitesmoke;
 }
 
 .g-buttons {
