@@ -1,7 +1,7 @@
 const headerMinutes = document.getElementsByClassName('g-minute')['0'];
 const headerHours = document.getElementsByClassName('g-hour')['0'];
 const clock = document.getElementsByClassName('g-clock')['0'];
-const clockItems = document.getElementsByClassName('g-clock-item');
+let clockItems = [];
 const hours = ['12', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11'];
 const minutes = ['00', '05', '10', '15', '20', '25', '30', '35', '40', '45', '50', '55'];
 const Type = {HOURS: 'hours', MINUTES: 'minutes'};
@@ -62,9 +62,20 @@ let Clock = {
     headerHours.innerText = date.getHours();
     headerMinutes.innerText = date.getMinutes() < 10
         ? '0' + date.getMinutes() : date.getMinutes();
+    createClockFace();
+    Clock.changeDisplayed(hours);
     Clock.calculateClockFace();
     Clock.type = Type.HOURS;
 })();
+
+function createClockFace() {
+    for (let i = 0; i < 12; i++) {
+        let span = document.createElement('span');
+        span.classList.add('g-clock-item');
+        clockItems.push(span);
+        clock.appendChild(span);
+    }
+}
 
 
 function toggleToMinutes() {

@@ -87,6 +87,7 @@ body {
     padding: 10px;
     user-select: none;
     cursor: default;
+    font-size: 1.1em;
 }
 
 .g-clock-item.g-selected {
