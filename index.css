@@ -1,0 +1,69 @@
+.g-time-wrapper {
+    background: honeydew;
+    min-width: 300px;
+    min-height: 450px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Roboto', sans-serif;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.g-flex {
+    flex-grow: 1;
+    border: 1px solid red
+}
+
+.g-head {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #1976D2;
+}
+
+.g-head-content {
+    font-size: 3em;
+    color: #E3F2FD;
+    display: flex;
+}
+
+.g-current.g-active {
+    color: white
+}
+
+.g-current {
+    margin: 0 2px;
+}
+
+.g-clock {
+    flex-grow: 4;
+}
+
+.g-buttons {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex-grow: 0.5;
+
+}
+
+.g-button {
+    font-weight: 600;
+    color: #1976D2;
+    border: none;
+    background: transparent;
+    margin-right: 16px;
+    padding: 8px;
+}
+
+.g-button:hover {
+    cursor: pointer;
+    background: #CFD8DC;
+}
+
+
