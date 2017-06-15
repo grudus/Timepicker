@@ -11,7 +11,7 @@ let Clock = {
     middle: {x: 0, y: 0},
     isMouseDown: false,
     selected: undefined,
-    type: Type.HOURS,
+    type: Type.MINUTES,
 
     calculateClockFace: () => {
         Clock.size.width = clock.clientWidth;
@@ -62,24 +62,38 @@ let Clock = {
     headerHours.innerText = date.getHours();
     headerMinutes.innerText = date.getMinutes() < 10
         ? '0' + date.getMinutes() : date.getMinutes();
-    toggleToHours();
+    Clock.calculateClockFace();
+    Clock.type = Type.HOURS;
 })();
 
 
 function toggleToMinutes() {
     headerHours.classList.remove('g-active');
     headerMinutes.classList.add('g-active');
-    Clock.changeDisplayed(minutes);
-    Clock.calculateClockFace();
-    Clock.type = Type.MINUTES;
+    if (Clock.type !== Type.MINUTES) {
+        onEachClockElement(c => c.classList.add('g-fade-out'));
+        Promise.delay(() => {
+            onEachClockElement(c => c.classList.remove('g-fade-out'));
+            Clock.changeDisplayed(minutes);
+            Clock.calculateClockFace();
+            Clock.type = Type.MINUTES;
+        }, 300);
+    }
 }
 
 function toggleToHours() {
     headerHours.classList.add('g-active');
     headerMinutes.classList.remove('g-active');
-    Clock.changeDisplayed(hours);
-    Clock.calculateClockFace();
-    Clock.type = Type.HOURS;
+    if (Clock.type !== Type.HOURS) {
+        onEachClockElement(c => c.classList.add('g-fade-out'));
+        Promise.delay(() => {
+            onEachClockElement(c => c.classList.remove('g-fade-out'));
+            Clock.changeDisplayed(hours);
+            Clock.calculateClockFace();
+            Clock.type = Type.HOURS;
+        }, 300);
+
+    }
 }
 
 function toRadians(angle) {
@@ -97,3 +111,30 @@ function findMousePosition(event, object) {
         y: event.clientY - rect.top
     }
 }
+
+function onEachClockElement(fun) {
+    [].forEach.call(clockItems, c => fun(c))
+}
+
+function delay(t) {
+    console.log('delay' + t);
+    return new Promise(function (resolve) {
+        setTimeout(resolve, t);
+    });
+}
+
+Promise.delay = function (fn, t) {
+    if (!t) {
+        t = fn;
+        fn = function () {
+        };
+    }
+    return delay(t).then(fn);
+};
+
+Promise.prototype.delay = function (fn, t) {
+    return this.then(function () {
+        return Promise.delay(fn, t);
+    });
+
+};
