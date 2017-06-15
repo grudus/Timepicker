@@ -22,7 +22,7 @@
     <section class="g-clock-wrapper g-flex">
         <div class="g-clock"
              onmousedown="Clock.isMouseDown = true"
-             onmouseup="Clock.isMouseDown = false"
+             onmouseup="Clock.isMouseDown = false; toggleToMinutes()"
              onmousemove="Clock.selectTime(event)"
              onclick="Clock.selectTime(event, true)">
             <span class="g-clock-item">12</span>
