@@ -1,12 +1,77 @@
 const headerMinutes = document.getElementsByClassName('g-minute')['0'];
 const headerHours = document.getElementsByClassName('g-hour')['0'];
 const clockElem = document.getElementsByClassName('g-clock')['0'];
+const innerClockElem = document.getElementsByClassName('g-clock g-clock-inner')['0'];
 let clockItems = [];
+let innerClockItems = [];
 let clock;
-const hours = ['12', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11'];
-const minutes = ['00', '05', '10', '15', '20', '25', '30', '35', '40', '45', '50', '55'];
+let currentTime = {};
 const Type = {HOURS: 'hours', MINUTES: 'minutes'};
 
+
+const MinutesFace = {
+    displayed: ['00', '05', '10', '15', '20', '25', '30', '35', '40', '45', '50', '55'],
+    type: Type.MINUTES,
+    selected: undefined,
+
+    onEnter: () => {
+        onEachClockElement(c => c.classList.remove('g-selected'));
+        MinutesFace.selected = clockItems[parseInt(currentTime.minutes / 5)];
+        MinutesFace.selected.classList.add('g-selected');
+    },
+    onLeave: () => {
+        console.log('minutes on leave');
+        if (MinutesFace.selected) {
+            MinutesFace.selected.classList.remove('g-selected');
+        }
+    },
+    selectTime: (angle) => {
+        if (MinutesFace.selected)
+            MinutesFace.selected.classList.remove('g-selected');
+
+        const index = Math.round(angle / 30) % 12;
+        MinutesFace.selected = clockItems[index];
+        MinutesFace.selected.classList.add('g-selected');
+        currentTime.minutes = parseInt(MinutesFace.displayed[index]);
+        updateDisplayedTime();
+    }
+};
+
+const HoursFace = {
+    displayed: ['12', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11'],
+    displayedInner: ['00', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23'],
+    type: Type.HOURS,
+    selected: undefined,
+
+    onEnter: () => {
+        innerClockElem.style.display = 'block';
+        onEachClockElement(c => c.classList.remove('g-selected'));
+        HoursFace.selected = currentTime.hour < 13
+            ? clockItems[currentTime.hour % 12]
+            : innerClockItems[currentTime.hour % 12];
+        HoursFace.selected.classList.add('g-selected');
+    },
+    onLeave: () => {
+        innerClockElem.style.display = 'none';
+        if (HoursFace.selected) {
+            HoursFace.selected.classList.remove('g-selected');
+            HoursFace.selected = undefined;
+        }
+
+    },
+    selectTime: (angle, elem) => {
+        if (HoursFace.selected)
+            HoursFace.selected.classList.remove('g-selected');
+
+        const index = Math.round(angle / 30) % 12;
+        HoursFace.selected = (elem === innerClockElem ? innerClockItems : clockItems)[index];
+        HoursFace.selected.classList.add('g-selected');
+        currentTime.hour = parseInt(HoursFace.selected.innerText);
+        updateDisplayedTime();
+    }
+
+
+};
 
 class Clock {
     constructor() {
@@ -14,7 +79,7 @@ class Clock {
         this.middle = {x: 0, y: 0};
         this.isMouseDown = false;
         this.selected = undefined;
-        this.type = Type.MINUTES;
+        this.currentFace = MinutesFace;
     }
 
 
@@ -24,22 +89,36 @@ class Clock {
         this.middle.x = this.size.width / 2;
         this.middle.y = this.size.height / 2;
         const radius = this.size.width / 2 - 20;
-        for (let i = 0; i < clockItems.length; i++) {
-            const angle = toRadians(i * 30);
-            const item = clockItems[i];
-            const itemWidth = item.offsetWidth;
-            const itemHeight = item.offsetHeight;
-            item.style.left = ((this.middle.x + Math.sin(angle) * radius) - itemWidth / 2) + 'px';
-            item.style.bottom = ((this.middle.y + Math.cos(angle) * radius) - itemHeight / 2) + 'px'
-        }
+
+        const innerWidth = innerClockElem.clientWidth;
+        const innerHeight = innerClockElem.clientHeight;
+        const middleX = innerWidth / 2;
+        const middleY = innerHeight / 2;
+
+        this.doCalculateClockFace(this.middle.x, this.middle.y, radius, clockItems);
+        this.doCalculateClockFace(middleX, middleY, radius - 40, innerClockItems);
     };
 
-    static changeDisplayed(array) {
+    doCalculateClockFace(middleX, middleY, radius, items) {
+        const angleQuantum = 360 / items.length;
+        for (let i = 0; i < items.length; i++) {
+
+            const angle = toRadians(i * angleQuantum);
+            const item = items[i];
+            const itemWidth = item.offsetWidth;
+            const itemHeight = item.offsetHeight;
+
+            item.style.left = ((middleX + Math.sin(angle) * radius) - itemWidth / 2) + 'px';
+            item.style.bottom = ((middleY + Math.cos(angle) * radius) - itemHeight / 2) + 'px'
+        }
+    }
+
+    changeDisplayed(array) {
         for (let i = 0; i < clockItems.length; i++)
             clockItems[i].innerText = array[i]
     };
 
-    selectTime(event, isMouseDown) {
+    selectTime(event, isMouseDown, elem) {
         if (!(isMouseDown || this.isMouseDown))
             return;
         const mouse = findMousePosition(event, clockElem);
@@ -48,62 +127,73 @@ class Clock {
         let angle = 90 - toDegrees(Math.atan(y / x));
         if (x < 0) angle += 180;
 
-        if (this.selected)
-            this.selected.classList.remove('g-selected');
-
-        const index = Math.round(angle / 30) % 12;
-        this.selected = clockItems[index];
-        this.selected.classList.add('g-selected');
-        this.updateTime(this.selected.innerText);
-    };
-
-    updateTime(newTime) {
-        (this.type === Type.HOURS ? headerHours : headerMinutes).innerText = newTime;
+        this.currentFace.selectTime(angle, elem);
+        event.stopPropagation();
     };
 }
 
 function createClockFace() {
-    for (let i = 0; i < 12; i++) {
-        let span = document.createElement('span');
-        span.classList.add('g-clock-item');
-        clockItems.push(span);
-        clockElem.appendChild(span);
+    doCreate(clockItems, clockElem, span => span.classList.add('g-clock-item'));
+    doCreate(innerClockItems, innerClockElem, (span, i) => {
+        span.classList.add('g-clock-item', 'g-clock-inner');
+        span.innerText = HoursFace.displayedInner[i];
+    });
+
+    function doCreate(_clockItems, _clockElem, fun) {
+        for (let i = 0; i < 12; i++) {
+            let span = document.createElement('span');
+            fun(span, i);
+            _clockItems.push(span);
+            _clockElem.appendChild(span);
+        }
     }
 }
 
 function toggleToMinutes() {
-    toggleTime(headerHours, headerMinutes, Type.MINUTES, minutes);
+    HoursFace.onLeave();
+    toggleTime(headerHours, headerMinutes, MinutesFace);
 }
 
 function toggleToHours() {
-    toggleTime(headerMinutes, headerHours, Type.HOURS, hours);
+    MinutesFace.onLeave();
+    toggleTime(headerMinutes, headerHours, HoursFace);
 }
 
-function toggleTime(objectToRemoveClass, objectToAddClass, type, displayed) {
+function toggleTime(objectToRemoveClass, objectToAddClass, face) {
     objectToRemoveClass.classList.remove('g-active');
     objectToAddClass.classList.add('g-active');
-    if (clock.type !== type) {
+    if (clock.currentFace !== face) {
         onEachClockElement(c => c.classList.add('g-fade-out'));
         Promise.delay(() => {
             onEachClockElement(c => c.classList.remove('g-fade-out'));
-            Clock.changeDisplayed(displayed);
-            clock.type = type;
+            clock.changeDisplayed(face.displayed);
+            clock.currentFace = face;
+            face.onEnter();
         }, 300);
     }
 }
 
+function updateDisplayedTime() {
+    if (currentTime.hour < 10)
+        headerHours.innerText = '0' + currentTime.hour;
+    else headerHours.innerText = currentTime.hour;
+    if (currentTime.minutes < 10)
+        headerMinutes.innerText = '0' + currentTime.minutes;
+    else headerMinutes.innerText = currentTime.minutes;
+}
+
 // start !!!! ##################################
+
 
 (function () {
     let date = new Date();
-    headerHours.innerText = date.getHours();
-    headerMinutes.innerText = date.getMinutes() < 10
-        ? '0' + date.getMinutes() : date.getMinutes();
+    currentTime = {hour: date.getHours(), minutes: date.getMinutes()};
+    updateDisplayedTime();
     createClockFace();
     clock = new Clock();
-    Clock.changeDisplayed(hours);
+    clock.changeDisplayed(HoursFace.displayed);
     clock.calculateClockFace();
-    clock.type = Type.HOURS;
+    clock.currentFace = HoursFace;
 })();
 
 
@@ -129,7 +219,6 @@ function onEachClockElement(fun) {
 }
 
 function delay(t) {
-    console.log('delay' + t);
     return new Promise(function (resolve) {
         setTimeout(resolve, t);
     });

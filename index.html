@@ -23,8 +23,13 @@
         <div class="g-clock"
              onmousedown="clock.isMouseDown = true"
              onmouseup="clock.isMouseDown = false; toggleToMinutes()"
-             onmousemove="clock.selectTime(event)"
-             onclick="clock.selectTime(event, true)">
+             onmousemove="clock.selectTime(event, false, clockElem)"
+             onclick="clock.selectTime(event, true, clockElem)">
+            <span class="g-middle-dot"></span>
+            <div class="g-clock g-clock-inner"
+                 onmousemove="clock.selectTime(event, false, innerClockElem)"
+                 onclick="clock.selectTime(event, true, innerClockElem)"
+            ></div>
         </div>
     </section>
 

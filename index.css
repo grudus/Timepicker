@@ -78,6 +78,14 @@ body {
     cursor: default;
 }
 
+.g-clock.g-clock-inner {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 160px;
+    width: 160px;
+}
+
 .g-clock-item {
     position: absolute;
     border-radius: 100%;
@@ -90,9 +98,26 @@ body {
     font-size: 1.1em;
 }
 
+.g-clock-item.g-clock-inner {
+    font-size: 0.9em;
+    color: darkmagenta;
+}
+
 .g-clock-item.g-selected {
     background: #1976D2;
     color: whitesmoke;
+}
+
+.g-middle-dot {
+    z-index: 2;
+    background: #222222;
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    border-radius: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .g-buttons {
