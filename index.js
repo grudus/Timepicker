@@ -62,6 +62,38 @@ class Clock {
     };
 }
 
+function createClockFace() {
+    for (let i = 0; i < 12; i++) {
+        let span = document.createElement('span');
+        span.classList.add('g-clock-item');
+        clockItems.push(span);
+        clockElem.appendChild(span);
+    }
+}
+
+function toggleToMinutes() {
+    toggleTime(headerHours, headerMinutes, Type.MINUTES, minutes);
+}
+
+function toggleToHours() {
+    toggleTime(headerMinutes, headerHours, Type.HOURS, hours);
+}
+
+function toggleTime(objectToRemoveClass, objectToAddClass, type, displayed) {
+    objectToRemoveClass.classList.remove('g-active');
+    objectToAddClass.classList.add('g-active');
+    if (clock.type !== type) {
+        onEachClockElement(c => c.classList.add('g-fade-out'));
+        Promise.delay(() => {
+            onEachClockElement(c => c.classList.remove('g-fade-out'));
+            Clock.changeDisplayed(displayed);
+            clock.type = type;
+        }, 300);
+    }
+}
+
+// start !!!! ##################################
+
 (function () {
     let date = new Date();
     headerHours.innerText = date.getHours();
@@ -74,45 +106,8 @@ class Clock {
     clock.type = Type.HOURS;
 })();
 
-function createClockFace() {
-    for (let i = 0; i < 12; i++) {
-        let span = document.createElement('span');
-        span.classList.add('g-clock-item');
-        clockItems.push(span);
-        clockElem.appendChild(span);
-    }
-}
 
-
-function toggleToMinutes() {
-    headerHours.classList.remove('g-active');
-    headerMinutes.classList.add('g-active');
-    if (clock.type !== Type.MINUTES) {
-        onEachClockElement(c => c.classList.add('g-fade-out'));
-        Promise.delay(() => {
-            onEachClockElement(c => c.classList.remove('g-fade-out'));
-            Clock.changeDisplayed(minutes);
-            clock.calculateClockFace();
-            clock.type = Type.MINUTES;
-        }, 300);
-    }
-}
-
-function toggleToHours() {
-    headerHours.classList.add('g-active');
-    headerMinutes.classList.remove('g-active');
-    if (clock.type !== Type.HOURS) {
-        onEachClockElement(c => c.classList.add('g-fade-out'));
-        Promise.delay(() => {
-            onEachClockElement(c => c.classList.remove('g-fade-out'));
-            Clock.changeDisplayed(hours);
-            clock.calculateClockFace();
-            clock.type = Type.HOURS;
-        }, 300);
-
-    }
-}
-
+// utils ####################################3
 function toRadians(angle) {
     return angle * (Math.PI / 180);
 }
