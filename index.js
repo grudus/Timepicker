@@ -4,6 +4,7 @@ const clockElem = document.getElementsByClassName('g-clock')['0'];
 const innerClockElem = document.getElementsByClassName('g-clock g-clock-inner')['0'];
 let clockItems = [];
 let innerClockItems = [];
+let outerClockItems = [];
 let clock;
 let currentTime = {};
 const Type = {HOURS: 'hours', MINUTES: 'minutes'};
@@ -16,24 +17,28 @@ const MinutesFace = {
 
     onEnter: () => {
         onEachClockElement(c => c.classList.remove('g-selected'));
-        MinutesFace.selected = clockItems[parseInt(currentTime.minutes / 5)];
+        MinutesFace.selected = MinutesFace.findSelected(currentTime.minutes);
         MinutesFace.selected.classList.add('g-selected');
     },
     onLeave: () => {
-        console.log('minutes on leave');
         if (MinutesFace.selected) {
             MinutesFace.selected.classList.remove('g-selected');
+            MinutesFace.selected = undefined;
         }
     },
     selectTime: (angle) => {
         if (MinutesFace.selected)
             MinutesFace.selected.classList.remove('g-selected');
 
-        const index = Math.round(angle / 30) % 12;
-        MinutesFace.selected = clockItems[index];
+        const minute = Math.round(angle / 6) % 60;
+        MinutesFace.selected = MinutesFace.findSelected(minute);
         MinutesFace.selected.classList.add('g-selected');
-        currentTime.minutes = parseInt(MinutesFace.displayed[index]);
+        currentTime.minutes = minute;
         updateDisplayedTime();
+    },
+
+    findSelected: (minute) => {
+        return (minute % 5 === 0) ? clockItems[minute / 5] : outerClockItems[minute];
     }
 };
 
@@ -97,6 +102,7 @@ class Clock {
 
         this.doCalculateClockFace(this.middle.x, this.middle.y, radius, clockItems);
         this.doCalculateClockFace(middleX, middleY, radius - 40, innerClockItems);
+        this.doCalculateClockFace(this.middle.x, this.middle.y, radius, outerClockItems)
     };
 
     doCalculateClockFace(middleX, middleY, radius, items) {
@@ -138,6 +144,13 @@ function createClockFace() {
         span.classList.add('g-clock-item', 'g-clock-inner');
         span.innerText = HoursFace.displayedInner[i];
     });
+
+    for (let i = 0; i < 60; i++) {
+        let span = document.createElement('span');
+        span.classList.add('g-clock-outer');
+        outerClockItems.push(span);
+        clockElem.appendChild(span);
+    }
 
     function doCreate(_clockItems, _clockElem, fun) {
         for (let i = 0; i < 12; i++) {

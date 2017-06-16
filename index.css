@@ -108,6 +108,22 @@ body {
     color: whitesmoke;
 }
 
+.g-clock-outer {
+    position: absolute;
+    background: red;
+    width: 1px;
+    height: 1px;
+    padding: 3px;
+    border-radius: 100%;
+    display: none;
+}
+
+.g-clock-outer.g-selected {
+    display: block;
+    position: absolute;
+    background: #1976D2;
+}
+
 .g-middle-dot {
     z-index: 2;
     background: #222222;
