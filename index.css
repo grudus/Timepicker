@@ -96,6 +96,7 @@ body {
     user-select: none;
     cursor: default;
     font-size: 1.1em;
+    z-index: 1;
 }
 
 .g-clock-item.g-clock-inner {
@@ -110,18 +111,17 @@ body {
 
 .g-clock-outer {
     position: absolute;
-    background: red;
-    width: 1px;
-    height: 1px;
-    padding: 3px;
+    width: 4px;
+    height: 4px;
+    border: 18px solid #1976D2;
+    background: whitesmoke;
+    color: whitesmoke;
     border-radius: 100%;
-    display: none;
+    visibility: hidden;
 }
 
 .g-clock-outer.g-selected {
-    display: block;
-    position: absolute;
-    background: #1976D2;
+    visibility: visible;
 }
 
 .g-middle-dot {

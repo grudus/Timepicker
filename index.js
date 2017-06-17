@@ -89,14 +89,14 @@ class Clock {
 
 
     calculateClockFace() {
-        this.size.width = clockElem.clientWidth;
-        this.size.height = clockElem.clientHeight;
+        this.size.width = clockElem.offsetWidth;
+        this.size.height = clockElem.offsetHeight;
         this.middle.x = this.size.width / 2;
         this.middle.y = this.size.height / 2;
         const radius = this.size.width / 2 - 20;
 
-        const innerWidth = innerClockElem.clientWidth;
-        const innerHeight = innerClockElem.clientHeight;
+        const innerWidth = innerClockElem.offsetWidth;
+        const innerHeight = innerClockElem.offsetHeight;
         const middleX = innerWidth / 2;
         const middleY = innerHeight / 2;
 
