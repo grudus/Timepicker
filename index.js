@@ -2,6 +2,7 @@ const headerMinutes = document.getElementsByClassName('g-minute')['0'];
 const headerHours = document.getElementsByClassName('g-hour')['0'];
 const clockElem = document.getElementsByClassName('g-clock')['0'];
 const innerClockElem = document.getElementsByClassName('g-clock g-clock-inner')['0'];
+const handOfAClock = document.getElementsByClassName('g-hand-of-a-clock')['0'];
 let clockItems = [];
 let innerClockItems = [];
 let outerClockItems = [];
@@ -19,6 +20,7 @@ const MinutesFace = {
         onEachClockElement(c => c.classList.remove('g-selected'));
         MinutesFace.selected = MinutesFace.findSelected(currentTime.minutes);
         MinutesFace.selected.classList.add('g-selected');
+        clock.calculateHandOfTheClock(currentTime.minutes * 6)
     },
     onLeave: () => {
         if (MinutesFace.selected) {
@@ -35,6 +37,7 @@ const MinutesFace = {
         MinutesFace.selected.classList.add('g-selected');
         currentTime.minutes = minute;
         updateDisplayedTime();
+        clock.calculateHandOfTheClock(angle)
     },
 
     findSelected: (minute) => {
@@ -55,6 +58,9 @@ const HoursFace = {
             ? clockItems[currentTime.hour % 12]
             : innerClockItems[currentTime.hour % 12];
         HoursFace.selected.classList.add('g-selected');
+
+        clock.calculateHandOfTheClock((currentTime.hour % 12) * 30, currentTime.hour < 13
+            ? clock.itemsRadius : clock.itemsRadius - 50)
     },
     onLeave: () => {
         innerClockElem.style.display = 'none';
@@ -73,6 +79,9 @@ const HoursFace = {
         HoursFace.selected.classList.add('g-selected');
         currentTime.hour = parseInt(HoursFace.selected.innerText);
         updateDisplayedTime();
+
+        clock.calculateHandOfTheClock(Math.round(angle / 30) * 30, elem === innerClockElem
+            ? clock.itemsRadius - 50 : clock.itemsRadius)
     }
 
 
@@ -85,24 +94,29 @@ class Clock {
         this.isMouseDown = false;
         this.selected = undefined;
         this.currentFace = MinutesFace;
+        this.itemsRadius = 0;
     }
 
+    calculateHandOfTheClock(angle, size = this.itemsRadius) {
+        handOfAClock.style.transform = `rotate(${angle - 90}deg)`;
+        handOfAClock.style.width = size + 'px';
+    }
 
     calculateClockFace() {
         this.size.width = clockElem.offsetWidth;
         this.size.height = clockElem.offsetHeight;
         this.middle.x = this.size.width / 2;
         this.middle.y = this.size.height / 2;
-        const radius = this.size.width / 2 - 20;
+        this.itemsRadius = this.size.width / 2 - 20;
 
         const innerWidth = innerClockElem.offsetWidth;
         const innerHeight = innerClockElem.offsetHeight;
         const middleX = innerWidth / 2;
         const middleY = innerHeight / 2;
 
-        this.doCalculateClockFace(this.middle.x, this.middle.y, radius, clockItems);
-        this.doCalculateClockFace(middleX, middleY, radius - 40, innerClockItems);
-        this.doCalculateClockFace(this.middle.x, this.middle.y, radius, outerClockItems)
+        this.doCalculateClockFace(this.middle.x, this.middle.y, this.itemsRadius, clockItems);
+        this.doCalculateClockFace(middleX, middleY, this.itemsRadius - 40, innerClockItems);
+        this.doCalculateClockFace(this.middle.x, this.middle.y, this.itemsRadius, outerClockItems)
     };
 
     doCalculateClockFace(middleX, middleY, radius, items) {
@@ -177,8 +191,10 @@ function toggleTime(objectToRemoveClass, objectToAddClass, face) {
     objectToAddClass.classList.add('g-active');
     if (clock.currentFace !== face) {
         onEachClockElement(c => c.classList.add('g-fade-out'));
+        handOfAClock.classList.add('g-fade-out');
         Promise.delay(() => {
             onEachClockElement(c => c.classList.remove('g-fade-out'));
+            handOfAClock.classList.remove('g-fade-out');
             clock.changeDisplayed(face.displayed);
             clock.currentFace = face;
             face.onEnter();
@@ -207,6 +223,7 @@ function updateDisplayedTime() {
     clock.changeDisplayed(HoursFace.displayed);
     clock.calculateClockFace();
     clock.currentFace = HoursFace;
+    HoursFace.onEnter();
 })();
 
 

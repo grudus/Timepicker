@@ -96,12 +96,13 @@ body {
     user-select: none;
     cursor: default;
     font-size: 1.1em;
-    z-index: 1;
+    z-index: 3;
 }
 
 .g-clock-item.g-clock-inner {
     font-size: 0.9em;
     color: darkmagenta;
+    z-index: 3;
 }
 
 .g-clock-item.g-selected {
@@ -118,6 +119,7 @@ body {
     color: whitesmoke;
     border-radius: 100%;
     visibility: hidden;
+    z-index: 2;
 }
 
 .g-clock-outer.g-selected {
@@ -126,14 +128,27 @@ body {
 
 .g-middle-dot {
     z-index: 2;
-    background: #222222;
+    background: #1976D2;
     position: absolute;
-    width: 2px;
-    height: 2px;
+    width: 1px;
+    height: 1px;
+    padding: 7px;
     border-radius: 100%;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+.g-hand-of-a-clock {
+    position: absolute;
+    z-index: 2;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%);
+    transform-origin: left center;
+    background: #1976D2;
+    height: 3px;
+    width: 20px;
 }
 
 .g-buttons {
