@@ -7,85 +7,96 @@ let clockItems = [];
 let innerClockItems = [];
 let outerClockItems = [];
 let clock;
+let minutesFace;
+let hoursFace;
 let currentTime = {};
 const Type = {HOURS: 'hours', MINUTES: 'minutes'};
 
 
-const MinutesFace = {
-    displayed: ['00', '05', '10', '15', '20', '25', '30', '35', '40', '45', '50', '55'],
-    type: Type.MINUTES,
-    selected: undefined,
+class MinutesFace {
 
-    onEnter: () => {
+    constructor() {
+        this.displayed = ['00', '05', '10', '15', '20', '25', '30', '35', '40', '45', '50', '55'];
+        this.type = Type.MINUTES;
+        this.selected = undefined;
+    }
+
+    onEnter() {
         onEachClockElement(c => c.classList.remove('g-selected'));
-        MinutesFace.selected = MinutesFace.findSelected(currentTime.minutes);
-        MinutesFace.selected.classList.add('g-selected');
+        this.selected = this.findSelected(currentTime.minutes);
+        this.selected.classList.add('g-selected');
         clock.calculateHandOfTheClock(currentTime.minutes * 6)
-    },
-    onLeave: () => {
-        if (MinutesFace.selected) {
-            MinutesFace.selected.classList.remove('g-selected');
-            MinutesFace.selected = undefined;
+    };
+
+    onLeave() {
+        if (this.selected) {
+            this.selected.classList.remove('g-selected');
+            this.selected = undefined;
         }
-    },
-    selectTime: (angle) => {
-        if (MinutesFace.selected)
-            MinutesFace.selected.classList.remove('g-selected');
+    }
+
+    selectTime(angle) {
+        if (this.selected)
+            this.selected.classList.remove('g-selected');
 
         const minute = Math.round(angle / 6) % 60;
-        MinutesFace.selected = MinutesFace.findSelected(minute);
-        MinutesFace.selected.classList.add('g-selected');
+        this.selected = this.findSelected(minute);
+        this.selected.classList.add('g-selected');
         currentTime.minutes = minute;
         updateDisplayedTime();
         clock.calculateHandOfTheClock(angle)
-    },
+    };
 
-    findSelected: (minute) => {
+
+    findSelected(minute) {
         return (minute % 5 === 0) ? clockItems[minute / 5] : outerClockItems[minute];
     }
-};
+}
 
-const HoursFace = {
-    displayed: ['12', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11'],
-    displayedInner: ['00', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23'],
-    type: Type.HOURS,
-    selected: undefined,
 
-    onEnter: () => {
+class HoursFace {
+    constructor() {
+        this.displayed = ['12', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11'];
+        this.displayedInner = ['00', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23'];
+        this.type = Type.HOURS;
+        this.selected = undefined;
+    }
+
+    onEnter() {
         innerClockElem.style.display = 'block';
         onEachClockElement(c => c.classList.remove('g-selected'));
-        HoursFace.selected = currentTime.hour < 13
+        this.selected = currentTime.hour < 13
             ? clockItems[currentTime.hour % 12]
             : innerClockItems[currentTime.hour % 12];
-        HoursFace.selected.classList.add('g-selected');
+        this.selected.classList.add('g-selected');
 
         clock.calculateHandOfTheClock((currentTime.hour % 12) * 30, currentTime.hour < 13
             ? clock.itemsRadius : clock.itemsRadius - 50)
-    },
-    onLeave: () => {
+    }
+
+    onLeave() {
         innerClockElem.style.display = 'none';
-        if (HoursFace.selected) {
-            HoursFace.selected.classList.remove('g-selected');
-            HoursFace.selected = undefined;
+        if (this.selected) {
+            this.selected.classList.remove('g-selected');
+            this.selected = undefined;
         }
 
-    },
-    selectTime: (angle, elem) => {
-        if (HoursFace.selected)
-            HoursFace.selected.classList.remove('g-selected');
+    }
+
+    selectTime(angle, elem) {
+        if (this.selected)
+            this.selected.classList.remove('g-selected');
 
         const index = Math.round(angle / 30) % 12;
-        HoursFace.selected = (elem === innerClockElem ? innerClockItems : clockItems)[index];
-        HoursFace.selected.classList.add('g-selected');
-        currentTime.hour = parseInt(HoursFace.selected.innerText);
+        this.selected = (elem === innerClockElem ? innerClockItems : clockItems)[index];
+        this.selected.classList.add('g-selected');
+        currentTime.hour = parseInt(this.selected.innerText);
         updateDisplayedTime();
 
         clock.calculateHandOfTheClock(Math.round(angle / 30) * 30, elem === innerClockElem
             ? clock.itemsRadius - 50 : clock.itemsRadius)
     }
-
-
-};
+}
 
 class Clock {
     constructor() {
@@ -93,7 +104,7 @@ class Clock {
         this.middle = {x: 0, y: 0};
         this.isMouseDown = false;
         this.selected = undefined;
-        this.currentFace = MinutesFace;
+        this.currentFace = minutesFace;
         this.itemsRadius = 0;
     }
 
@@ -156,7 +167,7 @@ function createClockFace() {
     doCreate(clockItems, clockElem, span => span.classList.add('g-clock-item'));
     doCreate(innerClockItems, innerClockElem, (span, i) => {
         span.classList.add('g-clock-item', 'g-clock-inner');
-        span.innerText = HoursFace.displayedInner[i];
+        span.innerText = hoursFace.displayedInner[i];
     });
 
     for (let i = 0; i < 60; i++) {
@@ -177,13 +188,13 @@ function createClockFace() {
 }
 
 function toggleToMinutes() {
-    HoursFace.onLeave();
-    toggleTime(headerHours, headerMinutes, MinutesFace);
+    hoursFace.onLeave();
+    toggleTime(headerHours, headerMinutes, minutesFace);
 }
 
 function toggleToHours() {
-    MinutesFace.onLeave();
-    toggleTime(headerMinutes, headerHours, HoursFace);
+    minutesFace.onLeave();
+    toggleTime(headerMinutes, headerHours, hoursFace);
 }
 
 function toggleTime(objectToRemoveClass, objectToAddClass, face) {
@@ -216,14 +227,16 @@ function updateDisplayedTime() {
 
 (function () {
     let date = new Date();
+    clock = new Clock();
+    minutesFace = new MinutesFace();
+    hoursFace = new HoursFace();
     currentTime = {hour: date.getHours(), minutes: date.getMinutes()};
     updateDisplayedTime();
     createClockFace();
-    clock = new Clock();
-    clock.changeDisplayed(HoursFace.displayed);
+    clock.changeDisplayed(hoursFace.displayed);
     clock.calculateClockFace();
-    clock.currentFace = HoursFace;
-    HoursFace.onEnter();
+    clock.currentFace = hoursFace;
+    hoursFace.onEnter();
 })();
 
 
