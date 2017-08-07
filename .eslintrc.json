@@ -13,10 +13,6 @@
       "error",
       4
     ],
-    "linebreak-style": [
-      "error",
-      "windows"
-    ],
     "quotes": [
       "error",
       "double"
@@ -24,6 +20,34 @@
     "semi": [
       "error",
       "always"
-    ]
+    ],
+    "dot-location": [
+      "error",
+      "property"
+    ],
+    "eqeqeq": [
+      "error",
+      "always"
+    ],
+    "camelcase": "error",
+    "max-len": [
+      "error",
+      120
+    ],
+    "max-lines": [
+      "error",
+      200
+    ],
+    "max-depth": [
+      "error",
+      2
+    ],
+    "max-params": [
+      "error",
+      4
+    ],
+    "no-var": "error",
+    "one-var-declaration-per-line": "error",
+    "prefer-const": "warn"
   }
 }

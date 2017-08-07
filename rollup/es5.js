@@ -1,14 +1,15 @@
-import nodeResolve from 'rollup-plugin-node-resolve';
-import convertCJS from 'rollup-plugin-commonjs';
+import nodeResolve from "rollup-plugin-node-resolve";
+import convertCJS from "rollup-plugin-commonjs";
 import babel from "rollup-plugin-babel";
-import globals from 'rollup-plugin-node-globals';
+import eslint from "rollup-plugin-eslint";
 
 export default {
-    entry: 'src/index.js',
-    format: 'umd',
-    moduleName: 'Timepicker',
+    entry: "src/index.js",
+    format: "umd",
+    moduleName: "Timepicker",
     sourceMap: true,
     plugins: [
+        eslint(),
         nodeResolve({
             jsnext: true,
             main: true,
@@ -16,12 +17,11 @@ export default {
         }),
         convertCJS(),
         babel({
-            exclude: 'node_modules/**',
+            exclude: "node_modules/**",
             presets: [
-                ['es2015', {modules: false}]
+                ["es2015", {modules: false}]
             ]
         }),
-        globals()
     ],
-    dest: `dist/bundle.js`
+    dest: "dist/bundle.js"
 };
