@@ -9,39 +9,7 @@
 </head>
 <body>
 
-<section class="g-time-wrapper">
-    <header class="g-head g-flex">
-        <section class="g-head-content">
-            <span class="g-current g-hour g-active g-pointer" onclick="Timepicker.toggleToHours()">21</span>
-            <span class="g-current">:</span>
-            <span class="g-current g-minute g-pointer" onclick="Timepicker.toggleToMinutes()">37</span>
-        </section>
-    </header>
-
-
-    <section class="g-clock-wrapper g-flex">
-        <div class="g-clock"
-             onmousedown="Timepicker.clock.isMouseDown = true"
-             onmouseup="Timepicker.clock.isMouseDown = false; Timepicker.toggleToMinutes()"
-             onmousemove="Timepicker.clock.selectTime(event, false, clockElem)"
-             onclick="Timepicker.clock.selectTime(event, true, clockElem)">
-            <span class="g-middle-dot"></span>
-            <div class="g-hand-of-a-clock"></div>
-            <div class="g-clock g-clock-inner"
-                 onmousemove="Timepicker.clock.selectTime(event, false, innerClockElem)"
-                 onclick="Timepicker.clock.selectTime(event, true, innerClockElem)"
-            ></div>
-        </div>
-    </section>
-
-
-    <footer class="g-buttons g-flex">
-        <button id="g-time-cancel" class="g-button g-cancel g-pointer">CANCEL</button>
-        <button id="g-time-submit" class="g-button g-submit g-pointer">OK</button>
-    </footer>
-
-</section>
-
+<div style="background: red; width: 300px; height: 300px;" onclick="Timepicker.showPicker()"></div>
 
 </body>
 
