@@ -1,0 +1,42 @@
+{
+  "name": "timepicker",
+  "version": "1.0.0",
+  "description": "Material design date picker in pure Javascript",
+  "main": "dist/bundle.js",
+  "jsnext:main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint **/*.js",
+    "rollup": "rollup -c rollup/es5.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/grudus/Timepicker.git"
+  },
+  "devDependencies": {
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-preset-es2015": "^6.24.1",
+    "eslint": "^4.4.0",
+    "rollup": "^0.45.2",
+    "rollup-plugin-babel": "^2.7.1",
+    "rollup-plugin-commonjs": "^8.1.0",
+    "rollup-plugin-eslint": "^4.0.0",
+    "rollup-plugin-node-globals": "^1.1.0",
+    "rollup-plugin-node-resolve": "^3.0.0"
+  },
+  "keywords": [
+    "vanillajs",
+    "javascript",
+    "js",
+    "materialdesign",
+    "material",
+    "design",
+    "timepicker"
+  ],
+  "author": "grudus",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/grudus/Timepicker/issues"
+  },
+  "homepage": "https://github.com/grudus/Timepicker#readme"
+}
