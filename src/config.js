@@ -5,4 +5,6 @@ const clockConfig = {
     onClose: () => document.body.removeChild(document.getElementById(clockId))
 };
 
-export default {clockId, clockConfig};
+const FaceType = {HOURS: "hours", MINUTES: "minutes"};
+
+export default {clockId, clockConfig, FaceType};

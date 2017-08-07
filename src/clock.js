@@ -1,4 +1,5 @@
 import ClockHeader from "./clockHeader";
+import ClockFace from "./clockFace";
 
 export default class Clock {
 
@@ -7,6 +8,13 @@ export default class Clock {
 
         this.initView();
         this.initTime();
+
+        this.header = new ClockHeader({
+            time: this.time,
+            onHourClicked: this.toggleToHours,
+            onMinutesClicked: this.toggleToHours
+        });
+        this.clockFace = new ClockFace(this.time);
     }
 
     initView() {
@@ -23,9 +31,13 @@ export default class Clock {
     initTime() {
         const date = new Date();
         this.time = {hours: date.getHours(), minutes: date.getMinutes()};
-        this.header = new ClockHeader({
-            time: this.time, onHourClicked: () => console.log("Hours"),
-            onMinutesClicked: () => console.log("Minutes")
-        });
+    }
+
+    toggleToHours() {
+
+    }
+
+    toggleToMinutes() {
+
     }
 }
