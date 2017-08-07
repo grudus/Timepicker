@@ -1,4 +1,5 @@
 import MinutesFace from "./minutesFace";
+import HoursFace from "./hoursFace";
 import Utils from "./utils";
 
 export default class ClockFace {
@@ -13,16 +14,24 @@ export default class ClockFace {
         this.middle = {};
 
         this.initViews();
-        this.createClockFace();
-        this.calculateClockFace();
 
         this.minutesFace = new MinutesFace({
             clockItems: this.clockItems,
             outerClockItems: this.outerClockItems
         }, initialTime.minutes, (minutes, angle) => this.updateMinutes(minutes, angle));
 
-        this.changeDisplayed(this.minutesFace.displayed);
-        this.minutesFace.onEnter();
+        this.hoursFace = new HoursFace({
+            radius: this.itemsRadius,
+            innerClockItems: this.innerClockItems,
+            clockItems: this.clockItems,
+            innerClockElem: this.innerClockElem
+        }, initialTime.hours, (hours, angle, radius) => this.updateHours(hours, angle, radius));
+
+        this.createClockFace();
+        this.calculateClockFace();
+
+        this.changeDisplayed(this.hoursFace.displayed);
+        this.hoursFace.onEnter();
     }
 
 
@@ -34,8 +43,9 @@ export default class ClockFace {
 
     createClockFace() {
         this.doCreate(this.clockItems, this.clockElem, span => span.classList.add("g-clock-item"));
-        this.doCreate(this.innerClockItems, this.innerClockElem, (span) => {
+        this.doCreate(this.innerClockItems, this.innerClockElem, (span, i) => {
             span.classList.add("g-clock-item", "g-clock-inner");
+            span.innerText = this.hoursFace.displayedInner[i];
         });
 
         for (let i = 0; i < 60; i++) {
@@ -101,8 +111,28 @@ export default class ClockFace {
         this.calculateHandOfTheClock(angle, this.itemsRadius);
     }
 
+    updateHours(hours, angle, radius) {
+        console.log(`Update to hours ${hours} and angle ${angle}`);
+        this.calculateHandOfTheClock(angle, radius);
+    }
+
     calculateHandOfTheClock(angle, size = this.itemsRadius) {
         this.handOfAClock.style.transform = `rotate(${angle - 90}deg)`;
         this.handOfAClock.style.width = size + "px";
+    }
+
+    toggleToHours() {
+        this.onEachClockElement(c => c.classList.remove("g-selected"));
+        this.minutesFace.onLeave();
+        this.hoursFace.onEnter();
+        this.changeDisplayed(this.hoursFace.displayed);
+    }
+
+    toggleToMinutes() {
+        this.onEachClockElement(c => c.classList.remove("g-selected"));
+        this.hoursFace.onLeave();
+        this.minutesFace.onEnter();
+        this.changeDisplayed(this.minutesFace.displayed);
+
     }
 }

@@ -36,7 +36,6 @@ export default class MinutesFace {
         this.updateMinutes(this.minutes, angle);
     }
 
-
     findSelected(minute) {
         return (minute % 5 === 0) ? this.items.clockItems[minute / 5] : this.items.outerClockItems[minute];
     }

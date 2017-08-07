@@ -11,8 +11,8 @@ export default class Clock {
 
         this.header = new ClockHeader({
             time: this.time,
-            onHourClicked: this.toggleToHours,
-            onMinutesClicked: this.toggleToHours
+            onHourClicked: () => this.toggleToHours(),
+            onMinutesClicked: () => this.toggleToMinutes()
         });
         this.clockFace = new ClockFace(this.time);
     }
@@ -34,10 +34,10 @@ export default class Clock {
     }
 
     toggleToHours() {
-
+        this.clockFace.toggleToHours();
     }
 
     toggleToMinutes() {
-
+        this.clockFace.toggleToMinutes();
     }
 }

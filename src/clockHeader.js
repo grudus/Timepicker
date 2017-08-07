@@ -10,21 +10,33 @@ export default class ClockHeader {
 
     initView() {
         this.headerHours = document.getElementsByClassName("g-hour")["0"];
-        this.headerHours.onclick = () => this.onHourClicked();
+        this.headerHours.onclick = () => {
+            this.toggleActive(this.headerMinutes, this.headerHours);
+            this.onHourClicked();
+        };
 
         this.headerMinutes = document.getElementsByClassName("g-minute")["0"];
-        this.headerMinutes.onclick = () => this.onMinutesClicked();
+        this.headerMinutes.onclick = () => {
+            this.toggleActive(this.headerHours, this.headerMinutes);
+            this.onMinutesClicked();
+        };
 
         this.updateDisplayedTime();
     }
 
-    updateDisplayedTime() {
-        if (this.time.hours < 10)
-            this.headerHours.innerText = "0" + this.time.hours;
-        else this.headerHours.innerText = this.time.hours;
+    toggleActive(objectToRemoveClass, objectToAddClass) {
+        objectToRemoveClass.classList.remove("g-active");
+        objectToAddClass.classList.add("g-active");
+    }
 
-        if (this.time.minutes < 10)
-            this.headerMinutes.innerText = "0" + this.time.minutes;
-        else this.headerMinutes.innerText = this.time.minutes;
+    updateDisplayedTime() {
+        this.doUpdateDisplayedTime(this.headerHours, this.time.hours);
+        this.doUpdateDisplayedTime(this.headerMinutes, this.time.minutes);
+    }
+
+    doUpdateDisplayedTime(node, value) {
+        if (value < 10)
+            node.innerText = "0" + value;
+        else node.innerText = value;
     }
 }
