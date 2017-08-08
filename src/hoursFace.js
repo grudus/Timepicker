@@ -15,13 +15,12 @@ export default class HoursFace {
 
     onEnter() {
         this.items.innerClockElem.style.display = "block";
-        this.selected = this.hours < 13
-            ? this.items.clockItems[this.hours % 12]
-            : this.items.innerClockItems[this.hours % 12];
+        const isInnerClock = this.hours < 13 && this.hours !== 0;
+        const hoursIndex = this.hours % 12;
+        this.selected = isInnerClock ? this.items.clockItems[hoursIndex] : this.items.innerClockItems[hoursIndex];
         this.selected.classList.add("g-selected");
 
-        this.updateHours(this.hours, (this.hours % 12) * 30, this.hours < 13
-            ? this.items.radius : this.items.radius - 50);
+        this.updateHours(this.hours, hoursIndex * 30, isInnerClock ? this.items.radius : this.items.radius - 50);
     }
 
     onLeave() {
@@ -43,8 +42,9 @@ export default class HoursFace {
 
         this.selected.classList.add("g-selected");
         this.hours = parseInt(this.selected.innerText);
+        const selectedAngle = Math.round(angle / 30) * 30;
 
-        this.updateHours(this.hours, ((Math.round(angle / 30) * 30), elem === this.items.innerClockElem
-            ? this.items.radius - 50 : this.items.radius));
+        this.updateHours(this.hours, selectedAngle,
+            elem === this.items.innerClockElem ? this.items.radius - 50 : this.items.radius);
     }
 }

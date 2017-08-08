@@ -11,17 +11,25 @@ export default class ClockHeader {
     initView() {
         this.headerHours = document.getElementsByClassName("g-hour")["0"];
         this.headerHours.onclick = () => {
-            this.toggleActive(this.headerMinutes, this.headerHours);
+            this.toggleActiveToHours();
             this.onHourClicked();
         };
 
         this.headerMinutes = document.getElementsByClassName("g-minute")["0"];
         this.headerMinutes.onclick = () => {
-            this.toggleActive(this.headerHours, this.headerMinutes);
+            this.toggleActiveToMinutes();
             this.onMinutesClicked();
         };
 
         this.updateDisplayedTime();
+    }
+
+    toggleActiveToMinutes() {
+        this.toggleActive(this.headerHours, this.headerMinutes);
+    }
+
+    toggleActiveToHours() {
+        this.toggleActive(this.headerMinutes, this.headerHours);
     }
 
     toggleActive(objectToRemoveClass, objectToAddClass) {

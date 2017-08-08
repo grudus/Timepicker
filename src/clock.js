@@ -1,5 +1,6 @@
 import ClockHeader from "./clockHeader";
 import ClockFace from "./clockFace";
+import Config from "./config";
 
 export default class Clock {
 
@@ -14,7 +15,7 @@ export default class Clock {
             onHourClicked: () => this.toggleToHours(),
             onMinutesClicked: () => this.toggleToMinutes()
         });
-        this.clockFace = new ClockFace(this.time);
+        this.clockFace = new ClockFace(this.time, (time, type) => this.onTimeUpdate(time, type));
     }
 
     initView() {
@@ -39,5 +40,14 @@ export default class Clock {
 
     toggleToMinutes() {
         this.clockFace.toggleToMinutes();
+    }
+
+    onTimeUpdate(time, type) {
+        this.time = time;
+        this.header.time = time;
+        this.header.updateDisplayedTime();
+        if (type === Config.FaceType.MINUTES)
+            this.header.toggleActiveToMinutes();
+
     }
 }

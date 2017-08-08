@@ -1,12 +1,14 @@
 import MinutesFace from "./minutesFace";
 import HoursFace from "./hoursFace";
 import Utils from "./utils";
+import Config from "./config";
 
 export default class ClockFace {
 
-    constructor(initialTime) {
-        this.initialTime = initialTime;
-
+    constructor(initialTime, onTimeUpdate) {
+        this.time = initialTime;
+        this.onTimeUpdate = onTimeUpdate;
+        this.isMouseDown = false;
         this.clockItems = [];
         this.innerClockItems = [];
         this.outerClockItems = [];
@@ -21,7 +23,6 @@ export default class ClockFace {
         }, initialTime.minutes, (minutes, angle) => this.updateMinutes(minutes, angle));
 
         this.hoursFace = new HoursFace({
-            radius: this.itemsRadius,
             innerClockItems: this.innerClockItems,
             clockItems: this.clockItems,
             innerClockElem: this.innerClockElem
@@ -29,9 +30,11 @@ export default class ClockFace {
 
         this.createClockFace();
         this.calculateClockFace();
+        this.hoursFace.items.radius = this.itemsRadius;
 
-        this.changeDisplayed(this.hoursFace.displayed);
-        this.hoursFace.onEnter();
+        this.currentFace = this.hoursFace;
+        this.changeDisplayed(this.currentFace.displayed);
+        this.currentFace.onEnter();
     }
 
 
@@ -39,6 +42,29 @@ export default class ClockFace {
         this.clockElem = document.getElementsByClassName("g-clock")["0"];
         this.innerClockElem = document.getElementsByClassName("g-clock g-clock-inner")["0"];
         this.handOfAClock = document.getElementsByClassName("g-hand-of-a-clock")["0"];
+        this.clockElem.onmousedown = () => this.isMouseDown = true;
+        this.clockElem.onmouseup = () => {
+            this.isMouseDown = false;
+            this.toggleToMinutes();
+        };
+        this.clockElem.onmousemove = () => this.selectTime(event, false, this.clockElem);
+        this.clockElem.onclick = () => this.selectTime(event, true, this.clockElem);
+
+        this.innerClockElem.onmousemove = () => this.selectTime(event, false, this.innerClockElem);
+        this.innerClockElem.onclick = () => this.selectTime(event, true, this.innerClockElem);
+    }
+
+    selectTime(event, isMouseDown, elem) {
+        if (!(isMouseDown || this.isMouseDown))
+            return;
+        const mouse = Utils.findMousePosition(event, this.clockElem);
+        const x = mouse.x - this.middle.x;
+        const y = this.middle.y - mouse.y;
+        let angle = 90 - Utils.toDegrees(Math.atan(y / x));
+        if (x < 0) angle += 180;
+
+        this.currentFace.selectTime(angle, elem);
+        event.stopPropagation();
     }
 
     createClockFace() {
@@ -96,7 +122,6 @@ export default class ClockFace {
         }
     }
 
-
     changeDisplayed(array) {
         for (let i = 0; i < this.clockItems.length; i++)
             this.clockItems[i].innerText = array[i];
@@ -107,13 +132,15 @@ export default class ClockFace {
     }
 
     updateMinutes(minutes, angle) {
-        console.log(`Update to minutes ${minutes} and angle ${angle}`);
+        this.time.minutes = minutes;
         this.calculateHandOfTheClock(angle, this.itemsRadius);
+        this.onTimeUpdate(this.time, Config.FaceType.MINUTES);
     }
 
     updateHours(hours, angle, radius) {
-        console.log(`Update to hours ${hours} and angle ${angle}`);
+        this.time.hours = hours;
         this.calculateHandOfTheClock(angle, radius);
+        this.onTimeUpdate(this.time, Config.FaceType.HOURS);
     }
 
     calculateHandOfTheClock(angle, size = this.itemsRadius) {
@@ -122,17 +149,27 @@ export default class ClockFace {
     }
 
     toggleToHours() {
-        this.onEachClockElement(c => c.classList.remove("g-selected"));
         this.minutesFace.onLeave();
-        this.hoursFace.onEnter();
-        this.changeDisplayed(this.hoursFace.displayed);
+        this.toggleTime(this.hoursFace);
     }
 
     toggleToMinutes() {
-        this.onEachClockElement(c => c.classList.remove("g-selected"));
         this.hoursFace.onLeave();
-        this.minutesFace.onEnter();
-        this.changeDisplayed(this.minutesFace.displayed);
+        this.toggleTime(this.minutesFace);
+    }
 
+    toggleTime(face) {
+        if (this.currentFace !== face) {
+            this.onEachClockElement(c => c.classList.add("g-fade-out"));
+            this.handOfAClock.classList.add("g-fade-out");
+            Promise.delay(() => {
+                this.onEachClockElement(c => c.classList.remove("g-fade-out"));
+                this.handOfAClock.classList.remove("g-fade-out");
+                this.changeDisplayed(face.displayed);
+                this.currentFace = face;
+                this.onEachClockElement(c => c.classList.remove("g-selected"));
+                face.onEnter();
+            }, 300);
+        }
     }
 }
