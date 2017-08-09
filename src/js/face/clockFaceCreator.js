@@ -1,4 +1,5 @@
 import Utils from "../meta/utils";
+import {css} from "../meta/config";
 
 export default class ClockFaceCreator {
 
@@ -10,15 +11,15 @@ export default class ClockFaceCreator {
     }
 
     create(clockItems, innerClockItems, outerClockItems, face) {
-        ClockFaceCreator.doCreate(clockItems, this.clockElem, span => span.classList.add("g-clock-item"));
+        ClockFaceCreator.doCreate(clockItems, this.clockElem, span => span.classList.add(css.item));
         ClockFaceCreator.doCreate(innerClockItems, this.innerClockElem, (span, i) => {
-            span.classList.add("g-clock-item", "g-clock-inner");
+            span.classList.add(css.item, css.inner);
             span.innerText = face.displayedInner[i];
         });
 
         for (let i = 0; i < 60; i++) {
             const span = document.createElement("span");
-            span.classList.add("g-clock-outer");
+            span.classList.add(css.outer);
             outerClockItems.push(span);
             this.clockElem.appendChild(span);
         }

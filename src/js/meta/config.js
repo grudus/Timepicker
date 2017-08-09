@@ -6,5 +6,20 @@ const clockConfig = {
 };
 
 const FaceType = {HOURS: "hours", MINUTES: "minutes"};
+const css = {
+    clock: "g-clock",
+    inner: "g-clock-inner",
+    outer: "g-clock-outer",
+    item: "g-clock-item",
+    hand: "g-hand-of-a-clock",
+    fadeOut: "g-fade-out",
+    selected: "g-selected",
+    active: "g-active",
+    submit: "g-submit",
+    cancel: "g-cancel",
+    hour: "g-hour",
+    minute: "g-minute"
+};
 
 export default {clockId, clockConfig, FaceType};
+export {css};

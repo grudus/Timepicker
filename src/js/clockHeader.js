@@ -1,3 +1,5 @@
+import {css} from "./meta/config";
+
 export default class ClockHeader {
 
     constructor(config) {
@@ -9,13 +11,13 @@ export default class ClockHeader {
     }
 
     initView() {
-        this.headerHours = document.getElementsByClassName("g-hour")["0"];
+        this.headerHours = document.getElementsByClassName(css.hour)[0];
         this.headerHours.onclick = () => {
             this.toggleActiveToHours();
             this.onHourClicked();
         };
 
-        this.headerMinutes = document.getElementsByClassName("g-minute")["0"];
+        this.headerMinutes = document.getElementsByClassName(css.minute)[0];
         this.headerMinutes.onclick = () => {
             this.toggleActiveToMinutes();
             this.onMinutesClicked();
@@ -33,8 +35,8 @@ export default class ClockHeader {
     }
 
     static toggleActive(objectToRemoveClass, objectToAddClass) {
-        objectToRemoveClass.classList.remove("g-active");
-        objectToAddClass.classList.add("g-active");
+        objectToRemoveClass.classList.remove(css.active);
+        objectToAddClass.classList.add(css.active);
     }
 
     updateDisplayedTime() {

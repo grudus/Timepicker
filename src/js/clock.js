@@ -1,6 +1,6 @@
 import ClockHeader from "./clockHeader";
 import ClockFace from "./face/clockFace";
-import Config from "./meta/config";
+import Config, {css} from "./meta/config";
 
 export default class Clock {
 
@@ -13,13 +13,13 @@ export default class Clock {
     }
 
     initView() {
-        this.submitButton = document.getElementsByClassName("g-submit")["0"];
+        this.submitButton = document.getElementsByClassName(css.submit)[0];
         this.submitButton.onclick = () => {
             this.options.onSubmit(this.time);
             this.options.onClose();
         };
 
-        this.cancelButton = document.getElementsByClassName("g-cancel")["0"];
+        this.cancelButton = document.getElementsByClassName(css.cancel)[0];
         this.cancelButton.onclick = () => this.options.onClose();
     }
 

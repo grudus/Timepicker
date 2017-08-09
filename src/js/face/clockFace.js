@@ -1,7 +1,7 @@
 import MinutesFace from "./minutesFace";
 import HoursFace from "./hoursFace";
 import Utils from "../meta/utils";
-import Config from "../meta/config";
+import Config, {css} from "../meta/config";
 import ClockFaceCreator from "./clockFaceCreator";
 
 export default class ClockFace {
@@ -29,9 +29,9 @@ export default class ClockFace {
 
 
     initViews() {
-        this.clockElem = document.getElementsByClassName("g-clock")["0"];
-        this.innerClockElem = document.getElementsByClassName("g-clock g-clock-inner")["0"];
-        this.handOfAClock = document.getElementsByClassName("g-hand-of-a-clock")["0"];
+        this.clockElem = document.getElementsByClassName(css.clock)[0];
+        this.innerClockElem = document.getElementsByClassName(`${css.inner} ${css.clock}`)[0];
+        this.handOfAClock = document.getElementsByClassName(css.hand)[0];
         this.clockElem.onmousedown = () => this.isMouseDown = true;
         this.clockElem.onmouseup = () => {
             this.isMouseDown = false;
@@ -118,14 +118,14 @@ export default class ClockFace {
 
     toggleTime(face) {
         if (this.currentFace !== face) {
-            this.onEachClockElement(c => c.classList.add("g-fade-out"));
-            this.handOfAClock.classList.add("g-fade-out");
+            this.onEachClockElement(c => c.classList.add(css.fadeOut));
+            this.handOfAClock.classList.add(css.fadeOut);
             Promise.delay(() => {
-                this.onEachClockElement(c => c.classList.remove("g-fade-out"));
-                this.handOfAClock.classList.remove("g-fade-out");
+                this.onEachClockElement(c => c.classList.remove(css.fadeOut));
+                this.handOfAClock.classList.remove(css.fadeOut);
                 this.changeDisplayed(face.displayed);
                 this.currentFace = face;
-                this.onEachClockElement(c => c.classList.remove("g-selected"));
+                this.onEachClockElement(c => c.classList.remove(css.selected));
                 face.onEnter();
             }, 300);
         }

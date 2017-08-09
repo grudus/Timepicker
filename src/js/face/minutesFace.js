@@ -1,4 +1,4 @@
-import Config from "../meta/config";
+import Config, {css} from "../meta/config";
 
 export default class MinutesFace {
 
@@ -13,24 +13,24 @@ export default class MinutesFace {
 
     onEnter() {
         this.selected = this.findSelected(this.minutes);
-        this.selected.classList.add("g-selected");
+        this.selected.classList.add(css.selected);
         this.updateMinutes(this.minutes, this.minutes * 6);
     }
 
     onLeave() {
         if (this.selected) {
-            this.selected.classList.remove("g-selected");
+            this.selected.classList.remove(css.selected);
             this.selected = undefined;
         }
     }
 
     selectTime(angle) {
         if (this.selected)
-            this.selected.classList.remove("g-selected");
+            this.selected.classList.remove(css.selected);
 
         const minute = Math.round(angle / 6) % 60;
         this.selected = this.findSelected(minute);
-        this.selected.classList.add("g-selected");
+        this.selected.classList.add(css.selected);
         this.minutes = minute;
         this.updateMinutes(this.minutes, angle);
     }
