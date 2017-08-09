@@ -12,7 +12,6 @@ export default class MinutesFace {
     }
 
     onEnter() {
-        // onEachClockElement(c => c.classList.remove("g-selected"));
         this.selected = this.findSelected(this.minutes);
         this.selected.classList.add("g-selected");
         this.updateMinutes(this.minutes, this.minutes * 6);

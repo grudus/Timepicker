@@ -2,6 +2,7 @@ import MinutesFace from "./minutesFace";
 import HoursFace from "./hoursFace";
 import Utils from "./utils";
 import Config from "./config";
+import ClockFaceCreator from "./clockFaceCreator";
 
 export default class ClockFace {
 
@@ -16,20 +17,9 @@ export default class ClockFace {
         this.middle = {};
 
         this.initViews();
+        this.initTimeFaces(initialTime);
+        this.createFace();
 
-        this.minutesFace = new MinutesFace({
-            clockItems: this.clockItems,
-            outerClockItems: this.outerClockItems
-        }, initialTime.minutes, (minutes, angle) => this.updateMinutes(minutes, angle));
-
-        this.hoursFace = new HoursFace({
-            innerClockItems: this.innerClockItems,
-            clockItems: this.clockItems,
-            innerClockElem: this.innerClockElem
-        }, initialTime.hours, (hours, angle, radius) => this.updateHours(hours, angle, radius));
-
-        this.createClockFace();
-        this.calculateClockFace();
         this.hoursFace.items.radius = this.itemsRadius;
 
         this.currentFace = this.hoursFace;
@@ -54,6 +44,29 @@ export default class ClockFace {
         this.innerClockElem.onclick = () => this.selectTime(event, true, this.innerClockElem);
     }
 
+    initTimeFaces(initialTime) {
+        this.minutesFace = new MinutesFace({
+            clockItems: this.clockItems,
+            outerClockItems: this.outerClockItems
+        }, initialTime.minutes, (minutes, angle) => this.updateMinutes(minutes, angle));
+
+        this.hoursFace = new HoursFace({
+            innerClockItems: this.innerClockItems,
+            clockItems: this.clockItems,
+            innerClockElem: this.innerClockElem
+        }, initialTime.hours, (hours, angle, radius) => this.updateHours(hours, angle, radius));
+    }
+
+    createFace() {
+        const clockFaceCreator = new ClockFaceCreator(this.clockElem, this.innerClockElem);
+        clockFaceCreator.create(this.clockItems, this.innerClockItems, this.outerClockItems, this.hoursFace);
+        clockFaceCreator.calculateSize(this.clockItems, this.innerClockItems, this.outerClockItems);
+
+        this.size = clockFaceCreator.size;
+        this.middle = clockFaceCreator.middle;
+        this.itemsRadius = clockFaceCreator.itemsRadius;
+    }
+
     selectTime(event, isMouseDown, elem) {
         if (!(isMouseDown || this.isMouseDown))
             return;
@@ -65,61 +78,6 @@ export default class ClockFace {
 
         this.currentFace.selectTime(angle, elem);
         event.stopPropagation();
-    }
-
-    createClockFace() {
-        this.doCreate(this.clockItems, this.clockElem, span => span.classList.add("g-clock-item"));
-        this.doCreate(this.innerClockItems, this.innerClockElem, (span, i) => {
-            span.classList.add("g-clock-item", "g-clock-inner");
-            span.innerText = this.hoursFace.displayedInner[i];
-        });
-
-        for (let i = 0; i < 60; i++) {
-            const span = document.createElement("span");
-            span.classList.add("g-clock-outer");
-            this.outerClockItems.push(span);
-            this.clockElem.appendChild(span);
-        }
-    }
-
-    doCreate(clockItems, clockElem, fun) {
-        for (let i = 0; i < 12; i++) {
-            const span = document.createElement("span");
-            fun(span, i);
-            clockItems.push(span);
-            clockElem.appendChild(span);
-        }
-    }
-
-    calculateClockFace() {
-        this.size.width = this.clockElem.offsetWidth;
-        this.size.height = this.clockElem.offsetHeight;
-        this.middle.x = this.size.width / 2;
-        this.middle.y = this.size.height / 2;
-        this.itemsRadius = this.size.width / 2 - 20;
-
-        const innerWidth = this.innerClockElem.offsetWidth;
-        const innerHeight = this.innerClockElem.offsetHeight;
-        const middleX = innerWidth / 2;
-        const middleY = innerHeight / 2;
-
-        this.doCalculateClockFace(this.middle.x, this.middle.y, this.itemsRadius, this.clockItems);
-        this.doCalculateClockFace(middleX, middleY, this.itemsRadius - 40, this.innerClockItems);
-        this.doCalculateClockFace(this.middle.x, this.middle.y, this.itemsRadius, this.outerClockItems);
-    }
-
-    doCalculateClockFace(middleX, middleY, radius, items) {
-        const angleQuantum = 360 / items.length;
-        for (let i = 0; i < items.length; i++) {
-
-            const angle = Utils.toRadians(i * angleQuantum);
-            const item = items[i];
-            const itemWidth = item.offsetWidth;
-            const itemHeight = item.offsetHeight;
-
-            item.style.left = ((middleX + Math.sin(angle) * radius) - itemWidth / 2) + "px";
-            item.style.bottom = ((middleY + Math.cos(angle) * radius) - itemHeight / 2) + "px";
-        }
     }
 
     changeDisplayed(array) {
