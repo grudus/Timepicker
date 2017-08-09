@@ -25,24 +25,24 @@ export default class ClockHeader {
     }
 
     toggleActiveToMinutes() {
-        this.toggleActive(this.headerHours, this.headerMinutes);
+        ClockHeader.toggleActive(this.headerHours, this.headerMinutes);
     }
 
     toggleActiveToHours() {
-        this.toggleActive(this.headerMinutes, this.headerHours);
+        ClockHeader.toggleActive(this.headerMinutes, this.headerHours);
     }
 
-    toggleActive(objectToRemoveClass, objectToAddClass) {
+    static toggleActive(objectToRemoveClass, objectToAddClass) {
         objectToRemoveClass.classList.remove("g-active");
         objectToAddClass.classList.add("g-active");
     }
 
     updateDisplayedTime() {
-        this.doUpdateDisplayedTime(this.headerHours, this.time.hours);
-        this.doUpdateDisplayedTime(this.headerMinutes, this.time.minutes);
+        ClockHeader.doUpdateDisplayedTime(this.headerHours, this.time.hours);
+        ClockHeader.doUpdateDisplayedTime(this.headerMinutes, this.time.minutes);
     }
 
-    doUpdateDisplayedTime(node, value) {
+    static doUpdateDisplayedTime(node, value) {
         if (value < 10)
             node.innerText = "0" + value;
         else node.innerText = value;

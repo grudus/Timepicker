@@ -181,8 +181,6 @@ body {
     animation: fade-out 0.4s;
 }
 
-
-
 .g-pointer:hover {
     cursor: pointer;
 }

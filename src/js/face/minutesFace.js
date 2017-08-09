@@ -1,4 +1,4 @@
-import Config from "./config";
+import Config from "../meta/config";
 
 export default class MinutesFace {
 

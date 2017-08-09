@@ -1,7 +1,7 @@
 import MinutesFace from "./minutesFace";
 import HoursFace from "./hoursFace";
-import Utils from "./utils";
-import Config from "./config";
+import Utils from "../meta/utils";
+import Config from "../meta/config";
 import ClockFaceCreator from "./clockFaceCreator";
 
 export default class ClockFace {
