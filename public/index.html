@@ -9,14 +9,16 @@
 </head>
 <body>
 
-<div style="background: red; width: 300px; height: 300px;" onclick="show()"></div>
+<input id="input" style="width: 300px; padding: 10px" onclick="show()" title="Time" placeholder="Select time" readonly>
 
 </body>
 
 <script type="text/javascript">
+    let time = new Date();
+
     function show() {
         Timepicker.showPicker({
-            time: new Date(),
+            time: time,
             headerBackground: '#424242',
             headerColor: '#e0e0e0',
             headerSelected: '#fafafa',
@@ -27,7 +29,11 @@
             clockBackground: "#424242",
             clockItemColor: "#fafafa",
             clockItemInnerColor: "#e0e0e0",
-            handColor: "#F44336"
+            handColor: "#F44336",
+            onSubmit: (selected) => {
+                time = selected;
+                document.getElementById("input").value = selected.formatted();
+            }
         })
     }
 </script>

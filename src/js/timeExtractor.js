@@ -1,5 +1,5 @@
 const hoursRegex = /^([0-1]?[0-9]|2[0-3])$/;
-const minutesRegex = /^([0-5][0-9])$/;
+const minutesRegex = /^([0-5]?[0-9])$/;
 const regex = /^([0-1]?[0-9]|2[0-3]):([0-5][0-9])$/;
 
 export default function extractTime(date) {
@@ -12,7 +12,8 @@ export default function extractTime(date) {
     else if (regex.test(date))
         return fromRegex(date);
     else
-        throw new TypeError("Time must be a Date or 'hh:MM' string or " + "object with `hours` and `minutes` fields");
+        throw new TypeError(`INVALID FORMAT: {${JSON.stringify(date)}}.
+            Time must be a Date or 'hh:MM' string or object with 'hours' and 'minutes' fields`);
 }
 
 function fromRegex(date) {
