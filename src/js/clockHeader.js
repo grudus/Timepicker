@@ -1,4 +1,4 @@
-import {css} from "./meta/config";
+import {DOM} from "./meta/config";
 
 export default class ClockHeader {
 
@@ -12,15 +12,13 @@ export default class ClockHeader {
     }
 
     initView() {
-        document.getElementsByClassName("g-head")[0].style.background = this.options.headerBackground;
-        document.getElementsByClassName("g-head")[0].style.color = this.options.headerColor;
-        this.headerHours = document.getElementsByClassName(css.hour)[0];
+        this.headerHours = document.getElementById(DOM.hoursId);
         this.headerHours.onclick = () => {
             this.toggleActiveToHours();
             this.onHourClicked();
         };
 
-        this.headerMinutes = document.getElementsByClassName(css.minute)[0];
+        this.headerMinutes = document.getElementById(DOM.minutesId);
         this.headerMinutes.onclick = () => {
             this.toggleActiveToMinutes();
             this.onMinutesClicked();

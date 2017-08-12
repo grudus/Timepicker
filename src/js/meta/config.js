@@ -1,6 +1,6 @@
 const clockId = "grudus-clock";
 
-const clockConfig = {
+const defaultConfig = {
     onSubmit: (time) => console.log(`Time: ${time.hours}:${time.minutes}`),
     onClose: () => document.body.removeChild(document.getElementById(clockId)),
     headerBackground: "#1976D2",
@@ -17,8 +17,10 @@ const clockConfig = {
 };
 
 const FaceType = {HOURS: "hours", MINUTES: "minutes"};
+
 const css = {
     clock: "g-clock",
+    clockItem: "g-clock-item",
     inner: "g-clock-inner",
     outer: "g-clock-outer",
     item: "g-clock-item",
@@ -32,5 +34,18 @@ const css = {
     minute: "g-minute"
 };
 
-export default {clockId, clockConfig, FaceType};
-export {css};
+const DOM = {
+    headerId: "g-head",
+    hoursId: "g-hours",
+    minutesId: "g-minutes",
+    clockId: "g-clock",
+    wrapperId: "g-clock-wrapper",
+    dotId: "g-middle-dot",
+    handId: "g-hand-of-a-clock",
+    buttonsId: "g-buttons",
+    submitId: "g-time-submit",
+    cancelId: "g-time-cancel"
+};
+
+export default {clockId, clockConfig: defaultConfig, FaceType};
+export {css, DOM};
