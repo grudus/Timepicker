@@ -21,7 +21,6 @@ body {
 }
 
 .g-time-wrapper {
-    background: honeydew;
     min-width: 300px;
     min-height: 450px;
     position: fixed;
@@ -37,7 +36,6 @@ body {
 
 .g-flex {
     flex-grow: 1;
-    background: #80bebebe;
 }
 
 .g-head {
@@ -97,10 +95,6 @@ body {
     z-index: 3;
 }
 
-.g-clock-item.g-selected {
-    background: #1976D2;
-    color: whitesmoke;
-}
 
 .g-clock-outer {
     position: absolute;
@@ -137,7 +131,6 @@ body {
     left: 50%;
     transform: translateY(-50%);
     transform-origin: left center;
-    background: #1976D2;
     height: 3px;
     width: 20px;
 }
