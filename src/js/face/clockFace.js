@@ -6,7 +6,8 @@ import ClockFaceCreator from "./clockFaceCreator";
 
 export default class ClockFace {
 
-    constructor(initialTime, onTimeUpdate) {
+    constructor(options, initialTime, onTimeUpdate) {
+        this.options = options;
         this.time = initialTime;
         this.onTimeUpdate = onTimeUpdate;
         this.isMouseDown = false;
@@ -24,7 +25,6 @@ export default class ClockFace {
 
         this.currentFace = this.hoursFace;
         this.changeDisplayed(this.currentFace.displayed);
-        this.currentFace.onEnter();
     }
 
 
@@ -46,15 +46,21 @@ export default class ClockFace {
 
     initTimeFaces(initialTime) {
         this.minutesFace = new MinutesFace({
+            options: this.options,
             clockItems: this.clockItems,
             outerClockItems: this.outerClockItems
         }, initialTime.minutes, (minutes, angle) => this.updateMinutes(minutes, angle));
 
         this.hoursFace = new HoursFace({
+            options: this.options,
             innerClockItems: this.innerClockItems,
             clockItems: this.clockItems,
             innerClockElem: this.innerClockElem
         }, initialTime.hours, (hours, angle, radius) => this.updateHours(hours, angle, radius));
+    }
+
+    onStart() {
+        this.currentFace.onEnter();
     }
 
     createFace() {
@@ -125,9 +131,15 @@ export default class ClockFace {
                 this.handOfAClock.classList.remove(css.fadeOut);
                 this.changeDisplayed(face.displayed);
                 this.currentFace = face;
-                this.onEachClockElement(c => c.classList.remove(css.selected));
+                this.onEachClockElement(c => this.removeSelected(c));
                 face.onEnter();
             }, 300);
         }
+    }
+
+    removeSelected(c) {
+        c.classList.remove(css.selected);
+        c.style.background = "transparent";
+        c.style.color = this.options.clockItemColor;
     }
 }

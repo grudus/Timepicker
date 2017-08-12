@@ -9,9 +9,27 @@
 </head>
 <body>
 
-<div style="background: red; width: 300px; height: 300px;" onclick="Timepicker.showPicker()"></div>
+<div style="background: red; width: 300px; height: 300px;" onclick="show()"></div>
 
 </body>
+
+<script type="text/javascript">
+    function show() {
+        Timepicker.showPicker({
+            headerBackground: '#ff0000',
+            headerColor: '#00ff00',
+            headerSelected: '#0faffa',
+            wrapperBackground: "#ff41de",
+            footerBackground: "#feff20",
+            submitColor: "#3a002a",
+            cancelColor: "#66d2b6",
+            clockBackground: "#aa9e6f",
+            clockItemColor: "#0000ff",
+            clockItemInnerColor: "#0f0f7f",
+            handColor: "#f00"
+        })
+    }
+</script>
 
 <script type="text/javascript" src="../dist/bundle.js"></script>
 </html>

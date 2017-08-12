@@ -1,6 +1,7 @@
 import clockHtml from "./meta/clockHtml";
 import Config from "./meta/config";
 import Clock from "./clock";
+import ColorStylist from "./colorStylists";
 
 function showPicker(config = {}) {
     const options = Object.assign({}, Config.clockConfig, config);
@@ -9,7 +10,9 @@ function showPicker(config = {}) {
     clockDiv.innerHTML = clockHtml;
     document.body.appendChild(clockDiv);
 
-    new Clock(options);
+    const clock = new Clock(options);
+    new ColorStylist(options);
+    clock.onStart();
 }
 
 export {showPicker};

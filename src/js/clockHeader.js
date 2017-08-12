@@ -3,6 +3,7 @@ import {css} from "./meta/config";
 export default class ClockHeader {
 
     constructor(config) {
+        this.options = config.options;
         this.time = config.time;
         this.onHourClicked = config.onHourClicked;
         this.onMinutesClicked = config.onMinutesClicked;
@@ -11,6 +12,8 @@ export default class ClockHeader {
     }
 
     initView() {
+        document.getElementsByClassName("g-head")[0].style.background = this.options.headerBackground;
+        document.getElementsByClassName("g-head")[0].style.color = this.options.headerColor;
         this.headerHours = document.getElementsByClassName(css.hour)[0];
         this.headerHours.onclick = () => {
             this.toggleActiveToHours();
@@ -24,19 +27,20 @@ export default class ClockHeader {
         };
 
         this.updateDisplayedTime();
+        this.toggleActiveToHours();
     }
 
     toggleActiveToMinutes() {
-        ClockHeader.toggleActive(this.headerHours, this.headerMinutes);
+        this.toggleActive(this.headerHours, this.headerMinutes);
     }
 
     toggleActiveToHours() {
-        ClockHeader.toggleActive(this.headerMinutes, this.headerHours);
+        this.toggleActive(this.headerMinutes, this.headerHours);
     }
 
-    static toggleActive(objectToRemoveClass, objectToAddClass) {
-        objectToRemoveClass.classList.remove(css.active);
-        objectToAddClass.classList.add(css.active);
+    toggleActive(objectToRemoveClass, objectToAddClass) {
+        objectToRemoveClass.style.color = this.options.headerColor;
+        objectToAddClass.style.color = this.options.headerSelected;
     }
 
     updateDisplayedTime() {

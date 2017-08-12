@@ -33,7 +33,6 @@ Promise.prototype.delay = function (fn, t) {
     return this.then(function () {
         return Promise.delay(fn, t);
     });
-
 };
 
 export default {toRadians, toDegrees, findMousePosition};
