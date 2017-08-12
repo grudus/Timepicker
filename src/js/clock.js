@@ -4,11 +4,11 @@ import Config, {css} from "./meta/config";
 
 export default class Clock {
 
-    constructor(options) {
+    constructor(options, time) {
         this.options = options;
 
         this.initView();
-        this.initTime();
+        this.time = time;
         this.initElements();
     }
 
@@ -21,11 +21,6 @@ export default class Clock {
 
         this.cancelButton = document.getElementsByClassName(css.cancel)[0];
         this.cancelButton.onclick = () => this.options.onClose();
-    }
-
-    initTime() {
-        const date = new Date();
-        this.time = {hours: date.getHours(), minutes: date.getMinutes()};
     }
 
     initElements() {

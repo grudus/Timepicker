@@ -1,7 +1,8 @@
 const clockId = "grudus-clock";
 
 const defaultConfig = {
-    onSubmit: (time) => console.log(`Time: ${time.hours}:${time.minutes}`),
+    onSubmit: () => {
+    },
     onClose: () => document.body.removeChild(document.getElementById(clockId)),
     headerBackground: "#1976D2",
     headerColor: "#c7d6e1",

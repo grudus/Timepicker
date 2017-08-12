@@ -50,10 +50,8 @@ export default class HoursFace {
     }
 
     colorSelected() {
-        console.log("COLOER SELECTED");
         this.selected.style.background = this.options.handColor;
         this.selected.style.color = "#ffffff";
-        console.log(this.selected);
     }
 
     removeSelected() {
