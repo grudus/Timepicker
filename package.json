@@ -1,12 +1,12 @@
 {
-  "name": "timepicker",
-  "version": "1.0.0",
-  "description": "Material design date picker in pure Javascript",
-  "main": "dist/bundle.js",
-  "jsnext:main": "src/index.js",
+  "name": "grudus-timepicker",
+  "version": "0.1.0",
+  "description": "Material design time picker in pure Javascript without any dependencies",
+  "main": "dist/grudus-timepicker.es5.js",
+  "jsnext:main": "dist/grudus-timepicker.js",
   "scripts": {
-    "lint": "eslint src/*.js",
-    "build": "rollup -c rollup/es5.js"
+    "prebuild": "eslint src/**/*.js",
+    "build": "rollup -c rollup/es5.js && rollup -c rollup/umd.js  && rollup -c rollup/es6.js"
   },
   "repository": {
     "type": "git",
@@ -19,8 +19,9 @@
     "rollup": "^0.45.2",
     "rollup-plugin-babel": "^2.7.1",
     "rollup-plugin-commonjs": "^8.1.0",
-    "rollup-plugin-eslint": "^4.0.0",
-    "rollup-plugin-node-resolve": "^3.0.0"
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-plugin-uglify": "^2.0.1",
+    "uglify-js": "^3.0.27"
   },
   "keywords": [
     "vanillajs",
