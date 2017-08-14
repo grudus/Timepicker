@@ -2,6 +2,7 @@
 
 ![dependencies](https://img.shields.io/david/grudus/timepicker.svg?style=flat-square)
 ![dev dependencies](https://img.shields.io/david/dev/grudus/timepicker.svg?style=flat-square)
+![license](https://img.shields.io/github/license/grudus/timepicker.svg?style=flat-square)
 
 Material design timepicker written in Javascript (without any external dependencies - **no jQuery, no Bootstrap, only one file!**)
 
