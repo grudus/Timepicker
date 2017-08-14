@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Timepicker</title>
+
+    <link href="https://rawgit.com/grudus/Timepicker/master/src/styles/index.css" type="text/css" rel="stylesheet">
+    <link href="./index.css" type="text/css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300" rel="stylesheet">
+    <link href="./lib/prism.css" rel="stylesheet">
+
+</head>
+<body>
+
+<section class="page-header p-lg">
+    <h1>Grudus Timepicker</h1>
+    <h2 class="subtitle">Material design timepicker in pure VanillaJs</h2>
+</section>
+
+<section class="content">
+    <section class="subcontent">
+        <h1 class="subheader">Installation</h1>
+        <p>Setup is very simply - you only need to include <b>css</b> and <b>javascript</b> files inside your html </p>
+
+        <pre><code class="language-html">
+        &lt;link href="https://rawgit.com/grudus/Timepicker/master/src/styles/index.css" type="text/css" rel="stylesheet"&gt;
+        &lt;script type="text/javascript" src="https://rawgit.com/grudus/Timepicker/gh-pages/dist/grudus-timepicker.es5.js"&gt;&lt;/script&gt;
+        </code></pre>
+
+        <p class="m-t-2">Or you can download it via <i>npm</i></p>
+
+        <pre><code class="language-bash">
+            npm install grudus-timepicker [--save]
+        </code></pre>
+
+
+        <p>Remember to include <b>grudus-timepicker.js</b> and <b>index.css</b> file either!</p>
+
+    </section>
+
+    <section class="subcontent">
+        <h1 class="subheader">Usage</h1>
+        <p>If you want to hold everything in one big html file, you can do as following:</p>
+        <pre><code class="language-html">&lt;head&gt;
+  &lt;link href=&quot;https://rawgit.com/grudus/Timepicker/master/src/styles/index.css&quot; type=&quot;text/css&quot; rel=&quot;stylesheet&quot;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;button onclick=&quot;Timepicker.showPicker()&quot;&gt;Show picker&lt;/button&gt;
+&lt;/body&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;https://rawgit.com/grudus/Timepicker/gh-pages/dist/grudus-timepicker.es5.js&quot;&gt;&lt;/script&gt;
+        </code></pre>
+
+        <p>And that's it! It will produce the following output: </p>
+        <button onclick="Timepicker.showPicker()" class="show-button">Show picker</button>
+    </section>
+
+</section>
+</body>
+
+<script src="./lib/prism.js"></script>
+
+<script type="text/javascript">
+    let time = new Date();
+
+    function show() {
+        Timepicker.showPicker({
+            time: time,
+            headerBackground: '#424242',
+            headerColor: '#e0e0e0',
+            headerSelected: '#fafafa',
+            wrapperBackground: "#424242",
+            footerBackground: "#424242",
+            submitColor: "#F44336",
+            cancelColor: "#F44336",
+            clockBackground: "#424242",
+            clockItemColor: "#fafafa",
+            clockItemInnerColor: "#e0e0e0",
+            handColor: "#F44336",
+            onSubmit: (selected) => {
+                time = selected;
+                document.getElementById("input").value = selected.formatted();
+            }
+        })
+    }
+</script>
+
+<script type="text/javascript"
+        src="https://rawgit.com/grudus/Timepicker/gh-pages/dist/grudus-timepicker.es5.js"></script>
+</html>
