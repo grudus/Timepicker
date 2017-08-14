@@ -43,6 +43,12 @@ code {
     color: #159957;
 }
 
+.miniheader {
+    margin: 0 0 1rem;
+    color: #159957;
+    font-weight: normal;
+}
+
 h1 {
     font-size: 3.25rem;
 }
@@ -61,6 +67,9 @@ h2 {
 .show-button {
     padding: 10px 15px;
     margin-top: 1rem;
+    background: #159957;
+    color: #fafafa;
+    cursor: pointer;
 }
 
 .p-lg {
@@ -69,4 +78,13 @@ h2 {
 
 .m-t-2 {
     margin-top: 2rem;
+}
+
+.footer {
+    font-weight: 800;
+}
+
+.footer a {
+    color: #159957;
+    text-decoration: none;
 }

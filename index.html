@@ -19,7 +19,7 @@
 
 <section class="content">
     <section class="subcontent">
-        <h1 class="subheader">Installation</h1>
+        <h1 class="subheader" id="installation">Installation</h1>
         <p>Setup is very simply - you only need to include <b>css</b> and <b>javascript</b> files inside your html </p>
 
         <pre><code class="language-html">
@@ -30,7 +30,7 @@
         <p class="m-t-2">Or you can download it via <i>npm</i></p>
 
         <pre><code class="language-bash">
-            npm install grudus-timepicker [--save]
+        npm install grudus-timepicker [--save]
         </code></pre>
 
 
@@ -39,50 +39,150 @@
     </section>
 
     <section class="subcontent">
-        <h1 class="subheader">Usage</h1>
-        <p>If you want to hold everything in one big html file, you can do as following:</p>
-        <pre><code class="language-html">&lt;head&gt;
-  &lt;link href=&quot;https://rawgit.com/grudus/Timepicker/master/src/styles/index.css&quot; type=&quot;text/css&quot; rel=&quot;stylesheet&quot;&gt;
-&lt;/head&gt;
-&lt;body&gt;
-  &lt;button onclick=&quot;Timepicker.showPicker()&quot;&gt;Show picker&lt;/button&gt;
-&lt;/body&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;https://rawgit.com/grudus/Timepicker/gh-pages/dist/grudus-timepicker.es5.js&quot;&gt;&lt;/script&gt;
+        <section>
+            <h1 class="subheader" id="usage">Usage</h1>
+            <p>If you want to hold everything in one big html file, you can do as following:</p>
+            <pre><code class="language-html">
+        &lt;head&gt;
+          &lt;link href=&quot;https://rawgit.com/grudus/Timepicker/master/src/styles/index.css&quot; type=&quot;text/css&quot; rel=&quot;stylesheet&quot;&gt;
+        &lt;/head&gt;
+        &lt;body&gt;
+          &lt;button onclick=&quot;Timepicker.showPicker()&quot;&gt;Show picker&lt;/button&gt;
+        &lt;/body&gt;
+        &lt;script type=&quot;text/javascript&quot; src=&quot;https://rawgit.com/grudus/Timepicker/gh-pages/dist/grudus-timepicker.es5.js&quot;&gt;&lt;/script&gt;
         </code></pre>
 
-        <p>And that's it! It will produce the following output: </p>
-        <button onclick="Timepicker.showPicker()" class="show-button">Show picker</button>
+            <p>And that's it! It will produce the following output: </p>
+            <button onclick="Timepicker.showPicker()" class="show-button">Show picker</button>
+        </section>
+
+        <section class="m-t-2">
+            <p>Or, you can fire it from javascript file</p>
+            <pre><code class="language-html">
+        &lt;head&gt;
+          &lt;link href=&quot;path/to/grudus-timepicker/src/styles/index.css&quot; type=&quot;text/css&quot; rel=&quot;stylesheet&quot;&gt;
+        &lt;/head&gt;
+        &lt;body&gt;
+          &lt;button onclick=&quot;showMePicker()&quot;&gt;Show js picker &lt;/button&gt;
+        &lt;/body&gt;
+        &lt;script type=&quot;text/javascript&quot; src=&quot;myfile.js&quot;&gt;&lt;/script&gt;
+            </code></pre>
+
+            <pre><code class="language-javascript">
+        //myfile.js
+        import {showPicker} from "path/to/grudus-timepicker/dist/grudus-timepicker.js"
+
+        function showMePicker() {
+            showPicker();
+        }
+            </code></pre>
+
+        </section>
+    </section>
+
+    <section class="subcontent">
+        <h1 class="subheader" id="action">Action</h1>
+        <p>You can set specific action on submit/cancel button clicked</p>
+
+        <pre><code class="language-javascript">
+        //myfile.js
+        import {showPicker} from "path/to/grudus-timepicker/dist/grudus-timepicker.js"
+
+        function showMePicker() {
+            showPicker({
+                onSubmit: (time) => {alert(`You selected time: ${time.formatted()}`)},
+                onCancel: () => {alert("Cancelled")}
+            });
+        }
+            </code></pre>
+
+        <p>Where <code>time</code> object is</p>
+        <pre><code class="language-javascript">{"hours": HH, "minutes": mm, "formatted": function}</code></pre>
+
+
+        <button onclick="showWithButtons()" class="show-button">Show js picker</button>
+    </section>
+
+    <section class="subcontent">
+        <h1 class="subheader" id="customization">Customization</h1>
+        <p>You can override default options by passing config object as parameter</p>
+
+        <section class="m-t-2">
+            <h2 class="miniheader">Initial time</h2>
+            <p>Set initial time by passing <b>time</b> argument. It accepts following formats:</p>
+            <pre><code class="language-markdown">
+        * Date object,
+        * string in format "HH:mm" (with or without leading 0)
+        * time object itself {"hours": HH, "minutes": mm}
+            </code> </pre>
+        </section>
+
+        <section class="m-t-2">
+            <h2 class="miniheader">Custom colors</h2>
+            <p>You can set own color for almost every visible element</p>
+
+            <pre><code class="language-html">
+            &lt;button class=&quot;show-button&quot; onclick=&quot;fancyPicker()&quot;&gt;Fancy picker&lt;/button&gt;
+            &lt;input id=&quot;selected&quot; value=&quot;21:38&quot; title=&quot;Selected time&quot; readonly&gt;
+            &lt;button class=&quot;show-button&quot; onclick=&quot;darkPicker()&quot;&gt;Dark picker&lt;/button&gt;
+            </code></pre>
+
+            <pre><code class="language-javascript">
+        function darkPicker() {
+            Timepicker.showPicker({
+                time: {"hours": 3, "minutes": "05"},
+                headerBackground: '#424242',
+                headerColor: '#e0e0e0',
+                headerSelected: '#fafafa',
+                wrapperBackground: "#424242",
+                footerBackground: "#424242",
+                submitColor: "#F44336",
+                cancelColor: "#F44336",
+                clockBackground: "#424242",
+                clockItemColor: "#fafafa",
+                clockItemInnerColor: "#e0e0e0",
+                handColor: "#F44336"
+            })
+
+
+        function fancyPicker() {
+            Timepicker.showPicker({
+                time: document.getElementById("selected").value,
+                headerBackground: '#11aadd',
+                headerColor: '#abcdef',
+                headerSelected: '#ff0fff',
+                wrapperBackground: "#720000",
+                footerBackground: "#00fa00",
+                submitColor: "#ab0923",
+                clockBackground: "#1100cc",
+                clockItemColor: "#e934fa",
+                clockItemInnerColor: "#e934fa",
+                handColor: "#f1234f",
+                onSubmit: (selected) => {
+                    document.getElementById("selected").value = selected.formatted();
+                }
+            })
+}
+            </code> </pre>
+
+
+            <button class="show-button" onclick="fancyPicker()">Fancy picker</button>
+            <input id="selected" value="21:38" style="padding: 10px;" title="Selected time" readonly>
+            <br/>
+            <button class="show-button" onclick="darkPicker()">Dark picker</button>
+        </section>
+
     </section>
 
 </section>
+
+<footer class="content">
+    <span class="footer"><a href="https://github.com/grudus/Timepicker">Timepicker</a> is maintained by <a href="https://github.com/grudus">grudus</a>.</span>
+</footer>
 </body>
 
 <script src="./lib/prism.js"></script>
-
-<script type="text/javascript">
-    let time = new Date();
-
-    function show() {
-        Timepicker.showPicker({
-            time: time,
-            headerBackground: '#424242',
-            headerColor: '#e0e0e0',
-            headerSelected: '#fafafa',
-            wrapperBackground: "#424242",
-            footerBackground: "#424242",
-            submitColor: "#F44336",
-            cancelColor: "#F44336",
-            clockBackground: "#424242",
-            clockItemColor: "#fafafa",
-            clockItemInnerColor: "#e0e0e0",
-            handColor: "#F44336",
-            onSubmit: (selected) => {
-                time = selected;
-                document.getElementById("input").value = selected.formatted();
-            }
-        })
-    }
-</script>
+<script src="./myfile.js"></script>
 
 <script type="text/javascript"
         src="https://rawgit.com/grudus/Timepicker/gh-pages/dist/grudus-timepicker.es5.js"></script>
