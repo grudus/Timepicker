@@ -9,6 +9,38 @@ body {
     background: #f5f5f5;
 }
 
+header {
+    position: fixed;
+    width: 100%;
+    background: #159957;
+    opacity: 0.9;
+}
+
+ul {
+    float: right;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover {
+    background-color: #fff;
+    color: #159957;
+}
+
 .page-header {
     color: #fff;
     text-align: center;
@@ -24,12 +56,12 @@ body {
 }
 
 .subcontent {
-    margin-top: 3rem;
+    margin-top: 1rem;
     font-size: 1.1em;
 }
 
 .subcontent:first-child {
-    margin-top: 0.5rem;
+    margin-top: 0;
 }
 
 code {
@@ -37,6 +69,7 @@ code {
 }
 
 .subheader {
+    padding-top: 50px;
     font-size: 2rem;
     font-weight: normal;
     margin-bottom: 1rem;
