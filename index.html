@@ -139,8 +139,11 @@
             </code></pre>
 
             <pre><code class="language-javascript">
+        //myfile.js
+        import {showPicker} from "path/to/grudus-timepicker/dist/grudus-timepicker.js"
+
         function darkPicker() {
-            Timepicker.showPicker({
+            showPicker({
                 time: {"hours": 3, "minutes": "05"},
                 headerBackground: '#424242',
                 headerColor: '#e0e0e0',
@@ -157,7 +160,7 @@
 
 
         function fancyPicker() {
-            Timepicker.showPicker({
+            showPicker({
                 time: document.getElementById("selected").value,
                 headerBackground: '#11aadd',
                 headerColor: '#abcdef',
