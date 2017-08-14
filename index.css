@@ -113,16 +113,16 @@ h2 {
     margin-top: 2rem;
 }
 
-footer {
+.footer {
     border-top: 1px solid #afafaf;
     padding-top: 1.5rem;
 }
 
-.footer {
+.footer-content {
     font-weight: 800;
 }
 
-.footer a {
+.footer-content a {
     color: #159957;
     text-decoration: none;
 }
