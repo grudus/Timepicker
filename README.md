@@ -49,7 +49,7 @@ But you can also create more user-friendly view - create your own dark theme:
 First, download it from npm 
 
 ````
-npm install --save-dev grudus-timepicker
+npm install --save grudus-timepicker
 ```` 
 
 Then, include css `src/styles/index.css`  and js `src/js/grudus-timepicker.es5.js`  file into your project
