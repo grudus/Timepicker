@@ -1,5 +1,6 @@
 # Grudus Timepicker
 
+![npm](https://img.shields.io/npm/v/grudus-timepicker.svg?style=flat-square)
 ![dependencies](https://img.shields.io/david/grudus/timepicker.svg?style=flat-square)
 ![dev dependencies](https://img.shields.io/david/dev/grudus/timepicker.svg?style=flat-square)
 ![license](https://img.shields.io/github/license/grudus/timepicker.svg?style=flat-square)
@@ -53,7 +54,10 @@ First, download it from npm
 npm install --save grudus-timepicker
 ```` 
 
-Then, include css `src/styles/index.css`  and js `src/js/grudus-timepicker.es5.js`  file into your project
+Then, include `index.css` into your project (e.g. add
+`<link href="node_modules/grudus-timepicker/src/styles/index.css" rel="stylesheet" type="text/css">` into your html file)
+
+and include js file  (e.g. add `<script src="node_modules/grudus-timepicker/dist/grudus-timepicker.es5.js" type="text/javascript"></script>`  into your html file)
 
 
 And lastly, somewhere in your code put 
