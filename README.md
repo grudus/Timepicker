@@ -6,6 +6,7 @@
 ![license](https://img.shields.io/github/license/grudus/timepicker.svg?style=flat-square)
 
 Material design timepicker written in Javascript (without any external dependencies - **no jQuery, no Bootstrap, only one file!**)
+See https://grudus.github.io/Timepicker/ for more usage!
 
 ## How it looks?
 
