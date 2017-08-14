@@ -52,11 +52,8 @@ First, download it from npm
 npm install --save-dev grudus-timepicker
 ```` 
 
-Then, add css file into your project, e.g. in html file
+Then, include css `src/styles/index.css`  and js `src/js/grudus-timepicker.es5.js`  file into your project
 
-````
- <link href="https://raw.githubusercontent.com/grudus/Timepicker/master/src/styles/index.css" type="text/css" rel="stylesheet">
-````
 
 And lastly, somewhere in your code put 
 
