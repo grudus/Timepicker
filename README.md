@@ -52,8 +52,13 @@ But you can also create more user-friendly view - create your own dark theme:
 You can include all in single `html` file! Just add
 
 ````html
- <link href="https://rawgit.com/grudus/Timepicker/master/src/styles/index.css" type="text/css" rel="stylesheet">
- <script type="text/javascript" src="https://rawgit.com/grudus/Timepicker/gh-pages/dist/grudus-timepicker.es5.js"></script>
+<head>
+  <link href="https://rawgit.com/grudus/Timepicker/master/src/styles/index.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+  <button onclick="Timepicker.showPicker()">Show picker</button>
+</body>
+<script type="text/javascript" src="https://rawgit.com/grudus/Timepicker/gh-pages/dist/grudus-timepicker.es5.js"></script>
 ````
 
 Or, you can download it from npm 
