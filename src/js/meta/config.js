@@ -40,6 +40,7 @@ const DOM = {
     hoursId: "g-hours",
     minutesId: "g-minutes",
     clockId: "g-clock",
+    innerId: "g-clock-inner",
     wrapperId: "g-clock-wrapper",
     dotId: "g-middle-dot",
     handId: "g-hand-of-a-clock",

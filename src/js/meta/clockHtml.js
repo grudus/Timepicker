@@ -12,7 +12,7 @@ export default "<section class='g-time-wrapper'>\n" +
 "        <div class='g-clock' id='g-clock'>" +
 "            <span class='g-middle-dot' id='g-middle-dot'></span>\n" +
 "            <div class='g-hand-of-a-clock' id='g-hand-of-a-clock'></div>\n" +
-"            <div class='g-clock g-clock-inner'></div>\n" +
+"            <div class='g-clock g-clock-inner' id='g-clock-inner'></div>\n" +
 "        </div>\n" +
 "    </section>\n" +
 "\n" +

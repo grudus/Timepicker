@@ -1,7 +1,7 @@
 import MinutesFace from "./minutesFace";
 import HoursFace from "./hoursFace";
 import Utils from "../meta/utils";
-import Config, {css} from "../meta/config";
+import Config, {css, DOM} from "../meta/config";
 import ClockFaceCreator from "./clockFaceCreator";
 
 export default class ClockFace {
@@ -27,16 +27,20 @@ export default class ClockFace {
         this.changeDisplayed(this.currentFace.displayed);
     }
 
-
     initViews() {
-        this.clockElem = document.getElementsByClassName(css.clock)[0];
-        this.innerClockElem = document.getElementsByClassName(`${css.inner} ${css.clock}`)[0];
-        this.handOfAClock = document.getElementsByClassName(css.hand)[0];
+        this.clockElem = document.getElementById(DOM.clockId);
+        this.innerClockElem = document.getElementById(DOM.innerId);
+        this.handOfAClock = document.getElementById(DOM.handId);
+
         this.clockElem.onmousedown = () => this.isMouseDown = true;
-        this.clockElem.onmouseup = () => {
-            this.isMouseDown = false;
+        this.clockElem.onmouseup = () => {this.isMouseDown = false;
             this.toggleToMinutes();
         };
+
+        this.handOfAClock.onmouseup = () => event.stopPropagation();
+        this.handOfAClock.onmousemove = () => event.stopPropagation();
+        this.handOfAClock.onclick = () => event.stopPropagation();
+
         this.clockElem.onmousemove = () => this.selectTime(event, false, this.clockElem);
         this.clockElem.onclick = () => this.selectTime(event, true, this.clockElem);
 

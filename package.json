@@ -6,7 +6,8 @@
   "jsnext:main": "dist/grudus-timepicker.js",
   "scripts": {
     "prebuild": "eslint src/**/*.js",
-    "build": "rollup -c rollup/es5.js && rollup -c rollup/umd.js  && rollup -c rollup/es6.js"
+    "build": "rollup -c rollup/es5.js && rollup -c rollup/umd.js  && rollup -c rollup/es6.js",
+    "dev": "rollup -c rollup/es5.js"
   },
   "repository": {
     "type": "git",
