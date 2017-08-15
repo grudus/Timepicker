@@ -49,9 +49,16 @@ But you can also create more user-friendly view - create your own dark theme:
 
 ## How to get it?
 
-First, download it from npm 
+You can include all in single `html` file! Just add
 
+````html
+ <link href="https://rawgit.com/grudus/Timepicker/master/src/styles/index.css" type="text/css" rel="stylesheet">
+ <script type="text/javascript" src="https://rawgit.com/grudus/Timepicker/gh-pages/dist/grudus-timepicker.es5.js"></script>
 ````
+
+Or, you can download it from npm 
+
+````bash
 npm install --save grudus-timepicker
 ```` 
 
@@ -74,4 +81,4 @@ And lastly, somewhere in your code put
         })
 ````
 
-You can set initial time by passing `time` field in argument. `time` may be a `Date` object, an object `{hours: 12, minutes: 44}` or a string in format `HH:mm`
+You can set initial time by passing `time` field in argument. `time` may be a `Date` object, an object `{hours: 12, minutes: 44}` or a string in format `HH:mm`. If you want to learn more, visit [customization section](https://grudus.github.io/Timepicker/#customization)
