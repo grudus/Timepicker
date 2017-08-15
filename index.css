@@ -9,7 +9,7 @@ body {
     background: #f5f5f5;
 }
 
-header {
+.topbar {
     position: fixed;
     width: 100%;
     background: #159957;
