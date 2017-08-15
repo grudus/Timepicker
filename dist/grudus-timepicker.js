@@ -1,12 +1,11 @@
-/*! grudus-timepicker v0.1.0 | (c) 2017-2017
+/*! grudus-timepicker v0.1.2 | (c) 2017-2017
  grudus | Apache-2.0 license (see LICENSE) */
-var clockHtml = "<section class='g-time-wrapper'>\n" + "    <header class='g-head g-flex' id='g-head'>\n" + "        <section class='g-head-content'>\n" + "            <span class='g-current g-hour g-active g-pointer' id='g-hours'>21</span>\n" + "            <span class='g-current'>:</span>\n" + "            <span class='g-current g-minute g-pointer' id='g-minutes'>37</span>\n" + "        </section>\n" + "    </header>\n" + "\n" + "\n" + "    <section class='g-clock-wrapper g-flex' id='g-clock-wrapper'>\n" + "        <div class='g-clock' id='g-clock'>" + "            <span class='g-middle-dot' id='g-middle-dot'></span>\n" + "            <div class='g-hand-of-a-clock' id='g-hand-of-a-clock'></div>\n" + "            <div class='g-clock g-clock-inner'></div>\n" + "        </div>\n" + "    </section>\n" + "\n" + "\n" + "    <footer class='g-buttons g-flex' id='g-buttons'>\n" + "        <button id='g-time-cancel' class='g-button g-cancel g-pointer'>CANCEL</button>\n" + "        <button id='g-time-submit' class='g-button g-submit g-pointer'>OK</button>\n" + "    </footer>\n" + "\n" + "</section>";
+var clockHtml = "<section class='g-time-wrapper'>\n" + "    <header class='g-head g-flex' id='g-head'>\n" + "        <section class='g-head-content'>\n" + "            <span class='g-current g-hour g-active g-pointer' id='g-hours'>21</span>\n" + "            <span class='g-current'>:</span>\n" + "            <span class='g-current g-minute g-pointer' id='g-minutes'>37</span>\n" + "        </section>\n" + "    </header>\n" + "\n" + "\n" + "    <section class='g-clock-wrapper g-flex' id='g-clock-wrapper'>\n" + "        <div class='g-clock' id='g-clock'>" + "            <span class='g-middle-dot' id='g-middle-dot'></span>\n" + "            <div class='g-hand-of-a-clock' id='g-hand-of-a-clock'></div>\n" + "            <div class='g-clock g-clock-inner' id='g-clock-inner'></div>\n" + "        </div>\n" + "    </section>\n" + "\n" + "\n" + "    <footer class='g-buttons g-flex' id='g-buttons'>\n" + "        <button id='g-time-cancel' class='g-button g-cancel g-pointer'>CANCEL</button>\n" + "        <button id='g-time-submit' class='g-button g-submit g-pointer'>OK</button>\n" + "    </footer>\n" + "\n" + "</section>";
 
 var clockId = "grudus-clock";
 
 var defaultConfig = {
-    onSubmit: function onSubmit() {
-    },
+    onSubmit: function onSubmit() {},
     onClose: function onClose() {
         return document.body.removeChild(document.getElementById(clockId));
     },
@@ -23,7 +22,7 @@ var defaultConfig = {
     handColor: "#1976D2"
 };
 
-var FaceType = {HOURS: "hours", MINUTES: "minutes"};
+var FaceType = { HOURS: "hours", MINUTES: "minutes" };
 
 var css = {
     clock: "g-clock",
@@ -46,6 +45,7 @@ var DOM = {
     hoursId: "g-hours",
     minutesId: "g-minutes",
     clockId: "g-clock",
+    innerId: "g-clock-inner",
     wrapperId: "g-clock-wrapper",
     dotId: "g-middle-dot",
     handId: "g-hand-of-a-clock",
@@ -54,30 +54,30 @@ var DOM = {
     cancelId: "g-time-cancel"
 };
 
-var Config = {clockId: clockId, clockConfig: defaultConfig, FaceType: FaceType};
+var Config = { clockId: clockId, clockConfig: defaultConfig, FaceType: FaceType };
 
 var classCallCheck = function (instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-        throw new TypeError("Cannot call a class as a function");
-    }
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
 };
 
 var createClass = function () {
-    function defineProperties(target, props) {
-        for (var i = 0; i < props.length; i++) {
-            var descriptor = props[i];
-            descriptor.enumerable = descriptor.enumerable || false;
-            descriptor.configurable = true;
-            if ("value" in descriptor) descriptor.writable = true;
-            Object.defineProperty(target, descriptor.key, descriptor);
-        }
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor) descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
     }
+  }
 
-    return function (Constructor, protoProps, staticProps) {
-        if (protoProps) defineProperties(Constructor.prototype, protoProps);
-        if (staticProps) defineProperties(Constructor, staticProps);
-        return Constructor;
-    };
+  return function (Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) defineProperties(Constructor, staticProps);
+    return Constructor;
+  };
 }();
 
 var ClockHeader = function () {
@@ -137,7 +137,7 @@ var ClockHeader = function () {
     }], [{
         key: "doUpdateDisplayedTime",
         value: function doUpdateDisplayedTime(node, value) {
-            if (value < 10) node.innerText = "0" + value; else node.innerText = value;
+            if (value < 10) node.innerText = "0" + value;else node.innerText = value;
         }
     }]);
     return ClockHeader;
@@ -306,8 +306,7 @@ function delay(t) {
 Promise.delay = function (fn, t) {
     if (!t) {
         t = fn;
-        fn = function fn() {
-        };
+        fn = function fn() {};
     }
     return delay(t).then(fn);
 };
@@ -318,7 +317,7 @@ Promise.prototype.delay = function (fn, t) {
     });
 };
 
-var Utils = {toRadians: toRadians, toDegrees: toDegrees, findMousePosition: findMousePosition};
+var Utils = { toRadians: toRadians, toDegrees: toDegrees, findMousePosition: findMousePosition };
 
 var ClockFaceCreator = function () {
     function ClockFaceCreator(clockElem, innerClockElem) {
@@ -424,9 +423,10 @@ var ClockFace = function () {
         value: function initViews() {
             var _this = this;
 
-            this.clockElem = document.getElementsByClassName(css.clock)[0];
-            this.innerClockElem = document.getElementsByClassName(css.inner + " " + css.clock)[0];
-            this.handOfAClock = document.getElementsByClassName(css.hand)[0];
+            this.clockElem = document.getElementById(DOM.clockId);
+            this.innerClockElem = document.getElementById(DOM.innerId);
+            this.handOfAClock = document.getElementById(DOM.handId);
+
             this.clockElem.onmousedown = function () {
                 return _this.isMouseDown = true;
             };
@@ -434,6 +434,17 @@ var ClockFace = function () {
                 _this.isMouseDown = false;
                 _this.toggleToMinutes();
             };
+
+            this.handOfAClock.onmouseup = function () {
+                return event.stopPropagation();
+            };
+            this.handOfAClock.onmousemove = function () {
+                return event.stopPropagation();
+            };
+            this.handOfAClock.onclick = function () {
+                return event.stopPropagation();
+            };
+
             this.clockElem.onmousemove = function () {
                 return _this.selectTime(event, false, _this.clockElem);
             };
@@ -710,19 +721,16 @@ var minutesRegex = /^([0-5]?[0-9])$/;
 var regex = /^([0-1]?[0-9]|2[0-3]):([0-5][0-9])$/;
 
 function extractTime(date) {
-    if (!date) return fromDate(new Date()); else if (date instanceof Date) return fromDate(date); else if (hoursRegex.test(date.hours) && minutesRegex.test(date.minutes)) return {
-        hours: parseInt(date.hours),
-        minutes: parseInt(date.minutes)
-    }; else if (regex.test(date)) return fromRegex(date); else throw new TypeError("INVALID FORMAT: {" + JSON.stringify(date) + "}.\n            Time must be a Date or 'hh:MM' string or object with 'hours' and 'minutes' fields");
+    if (!date) return fromDate(new Date());else if (date instanceof Date) return fromDate(date);else if (hoursRegex.test(date.hours) && minutesRegex.test(date.minutes)) return { hours: parseInt(date.hours), minutes: parseInt(date.minutes) };else if (regex.test(date)) return fromRegex(date);else throw new TypeError("INVALID FORMAT: {" + JSON.stringify(date) + "}.\n            Time must be a Date or 'hh:MM' string or object with 'hours' and 'minutes' fields");
 }
 
 function fromRegex(date) {
     var parsed = regex.exec(date);
-    return {hours: parseInt(parsed[1]), minutes: parseInt(parsed[2])};
+    return { hours: parseInt(parsed[1]), minutes: parseInt(parsed[2]) };
 }
 
 function fromDate(date) {
-    return {hours: date.getHours(), minutes: date.getMinutes()};
+    return { hours: date.getHours(), minutes: date.getMinutes() };
 }
 
 function showPicker() {
@@ -741,5 +749,5 @@ function showPicker() {
     clock.onStart();
 }
 
-export {showPicker};
+export { showPicker };
 //# sourceMappingURL=grudus-timepicker.js.map
