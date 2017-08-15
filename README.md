@@ -1,6 +1,7 @@
 # Grudus Timepicker
 
 ![npm](https://img.shields.io/npm/v/grudus-timepicker.svg?style=flat-square)
+![downloads](https://img.shields.io/npm/dt/grudus-timepicker.svg?style=flat-square)
 ![dependencies](https://img.shields.io/david/grudus/timepicker.svg?style=flat-square)
 ![dev dependencies](https://img.shields.io/david/dev/grudus/timepicker.svg?style=flat-square)
 ![license](https://img.shields.io/github/license/grudus/timepicker.svg?style=flat-square)
