@@ -21,6 +21,7 @@ body {
 }
 
 .g-time-wrapper {
+    box-sizing: content-box;
     min-width: 300px;
     min-height: 450px;
     position: fixed;
