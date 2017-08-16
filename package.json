@@ -1,6 +1,6 @@
 {
   "name": "grudus-timepicker",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Material design time picker in pure Javascript without any dependencies",
   "main": "dist/grudus-timepicker.es5.js",
   "jsnext:main": "dist/grudus-timepicker.js",
