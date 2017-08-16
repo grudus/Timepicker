@@ -7,6 +7,7 @@
   "scripts": {
     "prebuild": "eslint src/**/*.js",
     "build": "rollup -c rollup/es5.js && rollup -c rollup/umd.js  && rollup -c rollup/es6.js",
+    "patch": "npm run build && npm version patch && npm publish && git push --tags && git push",
     "dev": "rollup -c rollup/es5.js"
   },
   "repository": {
