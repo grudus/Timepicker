@@ -54,12 +54,12 @@ You can include all in single `html` file! Just add
 
 ````html
 <head>
-  <link href="https://rawgit.com/grudus/Timepicker/master/src/styles/index.css" type="text/css" rel="stylesheet">
+  <link href="https://rawgit.com/grudus/Timepicker/master/dist/index.css" type="text/css" rel="stylesheet">
 </head>
 <body>
   <button onclick="Timepicker.showPicker()">Show picker</button>
 </body>
-<script type="text/javascript" src="https://rawgit.com/grudus/Timepicker/gh-pages/dist/grudus-timepicker.es5.js"></script>
+<script type="text/javascript" src="https://rawgit.com/grudus/Timepicker/master/dist/grudus-timepicker.es5.js"></script>
 ````
 
 Or, you can download it from npm 
@@ -69,7 +69,7 @@ npm install --save grudus-timepicker
 ```` 
 
 Then, include `index.css` into your project (e.g. add
-`<link href="node_modules/grudus-timepicker/src/styles/index.css" rel="stylesheet" type="text/css">` into your html file)
+`<link href="node_modules/grudus-timepicker/dist/index.css" rel="stylesheet" type="text/css">` into your html file)
 
 and include js file  (e.g. add `<script src="node_modules/grudus-timepicker/dist/grudus-timepicker.es5.js" type="text/javascript"></script>`  into your html file)
 
