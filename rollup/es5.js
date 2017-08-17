@@ -4,7 +4,7 @@ import babel from "rollup-plugin-babel";
 import uglify from "rollup-plugin-uglify";
 
 const packageInfo = require("../package.json");
-const banner = `/*! ${packageInfo.name} v${packageInfo.version} | (c) 2017-${new Date().getFullYear()} 
+const banner = `/*! ${packageInfo.name} | (c) 2017-${new Date().getFullYear()} 
     ${packageInfo.author} | ${packageInfo.license} license (see LICENSE) */`;
 
 

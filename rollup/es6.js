@@ -3,7 +3,7 @@ import convertCJS from "rollup-plugin-commonjs";
 import babel from "rollup-plugin-babel";
 
 const packageInfo = require("../package.json");
-const banner = `/*! ${packageInfo.name} v${packageInfo.version} | (c) 2017-${new Date().getFullYear()}
+const banner = `/*! ${packageInfo.name} | (c) 2017-${new Date().getFullYear()}
  ${packageInfo.author} | ${packageInfo.license} license (see LICENSE) */`;
 
 export default {
