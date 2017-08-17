@@ -17,7 +17,7 @@ export default function styleColors(options) {
 }
 
 function changeColor(className, color, property = "color") {
-    const items = document.getElementsByClassName(className);
+    const items = Array.from(document.getElementsByClassName(className));
     for (const item of items)
         item.style[property] = color;
 }

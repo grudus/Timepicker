@@ -37,15 +37,15 @@ export default class ClockFace {
             this.toggleToMinutes();
         };
 
-        this.handOfAClock.onmouseup = () => event.stopPropagation();
-        this.handOfAClock.onmousemove = () => event.stopPropagation();
-        this.handOfAClock.onclick = () => event.stopPropagation();
+        this.handOfAClock.onmouseup = (e) => e.stopPropagation();
+        this.handOfAClock.onmousemove = (e) => e.stopPropagation();
+        this.handOfAClock.onclick = (e) => e.stopPropagation();
 
-        this.clockElem.onmousemove = () => this.selectTime(event, false, this.clockElem);
-        this.clockElem.onclick = () => this.selectTime(event, true, this.clockElem);
+        this.clockElem.onmousemove = (e) => this.selectTime(e, false, this.clockElem);
+        this.clockElem.onclick = (e) => this.selectTime(e, true, this.clockElem);
 
-        this.innerClockElem.onmousemove = () => this.selectTime(event, false, this.innerClockElem);
-        this.innerClockElem.onclick = () => this.selectTime(event, true, this.innerClockElem);
+        this.innerClockElem.onmousemove = (e) => this.selectTime(e, false, this.innerClockElem);
+        this.innerClockElem.onclick = (e) => this.selectTime(e, true, this.innerClockElem);
     }
 
     initTimeFaces(initialTime) {
