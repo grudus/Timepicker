@@ -118,6 +118,17 @@
 
 
         <button onclick="showWithButtons()" class="show-button">Show js picker</button>
+
+        <p class="m-t-2">You can also use utility format function</p>
+        <pre><code class="language-javascript">
+    import Timepicker from "path/to/grudus-timepicker/dist/grudus-timepicker.js"
+
+    Timepicker.format({hours: 11, minutes: 1}) // => "11:01"
+    Timepicker.format({hours: "2" minutes: "02"}) // => "02:02"
+    Timepicker.format(new Date()) // => current time in same format
+    Timepicker.format() // => current time in same format
+        </code></pre>
+
     </article>
 
     <article class="subcontent">
