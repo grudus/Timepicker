@@ -81,11 +81,17 @@
 
             <pre><code class="language-javascript">
         //myfile.js
-        import {showPicker} from "path/to/grudus-timepicker/dist/grudus-timepicker.js"
+        import Timepicker from "path/to/grudus-timepicker/dist/grudus-timepicker.js"
 
         function showMePicker() {
-            showPicker();
+            Timepicker.showPicker();
         }
+            </code></pre>
+
+            <p>It also supports CommonJS modules:</p>
+            <pre><code class="language-javascript">
+        var Timepicker = require("path/to/grudus-timepicker/dist/grudus-timepicker.umd.js");
+        Timepicker.showPicker();
             </code></pre>
 
         </section>
@@ -97,10 +103,10 @@
 
         <pre><code class="language-javascript">
         //myfile.js
-        import {showPicker} from "path/to/grudus-timepicker/dist/grudus-timepicker.js"
+        import Timepicker from "path/to/grudus-timepicker/dist/grudus-timepicker.js"
 
         function showMePicker() {
-            showPicker({
+            Timepicker.showPicker({
                 onSubmit: (time) => {alert(`You selected time: ${time.formatted()}`)},
                 onCancel: () => {alert("Cancelled")}
             });
@@ -140,10 +146,10 @@
 
             <pre><code class="language-javascript">
         //myfile.js
-        import {showPicker} from "path/to/grudus-timepicker/dist/grudus-timepicker.js"
+        import Timepicker from "path/to/grudus-timepicker/dist/grudus-timepicker.js"
 
         function darkPicker() {
-            showPicker({
+            Timepicker.showPicker({
                 time: {"hours": 3, "minutes": "05"},
                 headerBackground: '#424242',
                 headerColor: '#e0e0e0',
@@ -160,7 +166,7 @@
 
 
         function fancyPicker() {
-            showPicker({
+            Timepicker.showPicker({
                 time: document.getElementById("selected").value,
                 headerBackground: '#11aadd',
                 headerColor: '#abcdef',
