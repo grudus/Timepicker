@@ -7,7 +7,7 @@
   "scripts": {
     "prebuild": "eslint src/**/*.js && npm run css",
     "build": "rollup -c rollup/es5.js && rollup -c rollup/umd.js  && rollup -c rollup/es6.js",
-    "patch": "npm version minor && npm publish && git push --tags && git push",
+    "patch": "npm version patch && npm publish && git push --tags && git push",
     "dev": "rollup -c rollup/es5.js",
     "css": "postcss src/**/*.css --use autoprefixer --no-map  -d dist/"
   },
