@@ -599,6 +599,28 @@ var ClockFace = function () {
     return ClockFace;
 }();
 
+var hoursRegex = /^([0-1]?[0-9]|2[0-3])$/;
+var minutesRegex = /^([0-5]?[0-9])$/;
+var regex = /^([0-1]?[0-9]|2[0-3]):([0-5][0-9])$/;
+
+function extractTime(date) {
+    if (!date) return fromDate(new Date());else if (date instanceof Date) return fromDate(date);else if (hoursRegex.test(date.hours) && minutesRegex.test(date.minutes)) return { hours: parseInt(date.hours), minutes: parseInt(date.minutes) };else if (regex.test(date)) return fromRegex(date);else throw new TypeError("INVALID FORMAT: {" + JSON.stringify(date) + "}.\n            Time must be a Date or 'hh:MM' string or object with 'hours' and 'minutes' fields");
+}
+
+function fromRegex(date) {
+    var parsed = regex.exec(date);
+    return { hours: parseInt(parsed[1]), minutes: parseInt(parsed[2]) };
+}
+
+function fromDate(date) {
+    return { hours: date.getHours(), minutes: date.getMinutes() };
+}
+
+var formatTime = function (time) {
+    var extractedTime = extractTime(time);
+    return (extractedTime.hours < 10 ? "0" + extractedTime.hours : extractedTime.hours) + ":" + (extractedTime.minutes < 10 ? "0" + extractedTime.minutes : extractedTime.minutes);
+};
+
 var Clock = function () {
     function Clock(options, time) {
         classCallCheck(this, Clock);
@@ -619,7 +641,7 @@ var Clock = function () {
             this.submitButton.onclick = function () {
                 var time = _this.time;
                 time.formatted = function () {
-                    return (time.hours < 10 ? "0" + time.hours : time.hours) + ":" + (time.minutes < 10 ? "0" + time.minutes : time.minutes);
+                    return formatTime(time);
                 };
                 _this.options.onSubmit(time);
                 _this.options.onClose();
@@ -722,23 +744,6 @@ function changeColor(className, color) {
     }
 }
 
-var hoursRegex = /^([0-1]?[0-9]|2[0-3])$/;
-var minutesRegex = /^([0-5]?[0-9])$/;
-var regex = /^([0-1]?[0-9]|2[0-3]):([0-5][0-9])$/;
-
-function extractTime(date) {
-    if (!date) return fromDate(new Date());else if (date instanceof Date) return fromDate(date);else if (hoursRegex.test(date.hours) && minutesRegex.test(date.minutes)) return { hours: parseInt(date.hours), minutes: parseInt(date.minutes) };else if (regex.test(date)) return fromRegex(date);else throw new TypeError("INVALID FORMAT: {" + JSON.stringify(date) + "}.\n            Time must be a Date or 'hh:MM' string or object with 'hours' and 'minutes' fields");
-}
-
-function fromRegex(date) {
-    var parsed = regex.exec(date);
-    return { hours: parseInt(parsed[1]), minutes: parseInt(parsed[2]) };
-}
-
-function fromDate(date) {
-    return { hours: date.getHours(), minutes: date.getMinutes() };
-}
-
 function _showPicker() {
     var config = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
@@ -758,6 +763,9 @@ function _showPicker() {
 var index = {
     showPicker: function showPicker(config) {
         return _showPicker(config);
+    },
+    format: function format(time) {
+        return formatTime(time);
     }
 };
 

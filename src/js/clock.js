@@ -1,6 +1,7 @@
 import ClockHeader from "./clockHeader";
 import ClockFace from "./face/clockFace";
 import Config, {DOM} from "./meta/config";
+import formatTime from "./timeFormatter";
 
 export default class Clock {
 
@@ -16,10 +17,7 @@ export default class Clock {
         this.submitButton = document.getElementById(DOM.submitId);
         this.submitButton.onclick = () => {
             const time = this.time;
-            time.formatted = function () {
-                return (time.hours < 10 ? "0" + time.hours : time.hours)
-                    + ":" + (time.minutes < 10 ? "0" + time.minutes : time.minutes);
-            };
+            time.formatted = () => formatTime(time);
             this.options.onSubmit(time);
             this.options.onClose();
         };

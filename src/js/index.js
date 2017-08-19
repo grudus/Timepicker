@@ -3,6 +3,7 @@ import Config from "./meta/config";
 import Clock from "./clock";
 import styleColors from "./colorStylists";
 import getTime from "./timeExtractor";
+import formatTime from "./timeFormatter";
 
 function showPicker(config = {}) {
     const options = Object.assign({}, Config.clockConfig, config);
@@ -19,6 +20,7 @@ function showPicker(config = {}) {
 }
 
 export default {
-    showPicker: (config) => showPicker(config)
+    showPicker: (config) => showPicker(config),
+    format: (time) => formatTime(time)
 };
 
