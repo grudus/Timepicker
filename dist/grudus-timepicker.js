@@ -733,7 +733,7 @@ function fromDate(date) {
     return { hours: date.getHours(), minutes: date.getMinutes() };
 }
 
-function showPicker() {
+function _showPicker() {
     var config = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
     var options = Object.assign({}, Config.clockConfig, config);
@@ -749,5 +749,11 @@ function showPicker() {
     clock.onStart();
 }
 
-export { showPicker };
+var index = {
+    showPicker: function showPicker(config) {
+        return _showPicker(config);
+    }
+};
+
+export default index;
 //# sourceMappingURL=grudus-timepicker.js.map

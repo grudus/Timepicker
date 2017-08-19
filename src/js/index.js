@@ -18,4 +18,7 @@ function showPicker(config = {}) {
     clock.onStart();
 }
 
-export {showPicker};
+export default {
+    showPicker: (config) => showPicker(config)
+};
+
