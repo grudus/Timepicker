@@ -71,12 +71,13 @@ npm install --save grudus-timepicker
 Then, include `index.css` into your project (e.g. add
 `<link href="node_modules/grudus-timepicker/dist/index.css" rel="stylesheet" type="text/css">` into your html file)
 
-and include js file  (e.g. add `<script src="node_modules/grudus-timepicker/dist/grudus-timepicker.es5.js" type="text/javascript"></script>`  into your html file)
-
-
 And lastly, somewhere in your code put 
 
 ````javascript
+import Timepicker from "path/to/grudus-timepicker/dist/grudus-timepicker.js";
+
+// ...
+
  Timepicker.showPicker({
             time: new Date(),
             onSubmit: (time) => {
