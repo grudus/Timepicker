@@ -34,9 +34,7 @@ var clockId = "grudus-clock";
 
 var defaultConfig = {
     onSubmit: function onSubmit() {},
-    onClose: function onClose() {
-        return document.body.removeChild(document.getElementById(clockId));
-    },
+    onCancel: function onCancel() {},
     headerBackground: "#1976D2",
     headerColor: "#c7d6e1",
     headerSelected: "#ffffff",
@@ -649,12 +647,13 @@ var Clock = function () {
                     return formatTime(time);
                 };
                 _this.options.onSubmit(time);
-                _this.options.onClose();
+                Clock.dispose();
             };
 
             this.cancelButton = document.getElementById(DOM.cancelId);
             this.cancelButton.onclick = function () {
-                return _this.options.onClose();
+                _this.options.onCancel();
+                Clock.dispose();
             };
         }
     }, {
@@ -698,6 +697,11 @@ var Clock = function () {
             this.header.time = time;
             this.header.updateDisplayedTime();
             if (type === Config.FaceType.MINUTES) this.header.toggleActiveToMinutes();
+        }
+    }], [{
+        key: "dispose",
+        value: function dispose() {
+            document.body.removeChild(document.getElementById(Config.clockId));
         }
     }]);
     return Clock;

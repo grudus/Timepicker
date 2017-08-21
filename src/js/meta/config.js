@@ -3,7 +3,8 @@ const clockId = "grudus-clock";
 const defaultConfig = {
     onSubmit: () => {
     },
-    onClose: () => document.body.removeChild(document.getElementById(clockId)),
+    onCancel: () => {
+    },
     headerBackground: "#1976D2",
     headerColor: "#c7d6e1",
     headerSelected: "#ffffff",

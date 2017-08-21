@@ -19,11 +19,14 @@ export default class Clock {
             const time = this.time;
             time.formatted = () => formatTime(time);
             this.options.onSubmit(time);
-            this.options.onClose();
+            Clock.dispose();
         };
 
         this.cancelButton = document.getElementById(DOM.cancelId);
-        this.cancelButton.onclick = () => this.options.onClose();
+        this.cancelButton.onclick = () => {
+            this.options.onCancel();
+            Clock.dispose();
+        };
     }
 
     initElements() {
@@ -55,5 +58,9 @@ export default class Clock {
         if (type === Config.FaceType.MINUTES)
             this.header.toggleActiveToMinutes();
 
+    }
+
+    static dispose() {
+        document.body.removeChild(document.getElementById(Config.clockId));
     }
 }
