@@ -37,7 +37,7 @@ function fancyPicker() {
         submitColor: "#ab0923",
         clockBackground: "#1100cc",
         clockItemColor: "#e934fa",
-        clockItemInnerColor: "#e934fa",
+        clockItemInnerColor: "#2bff71",
         handColor: "#f1234f",
         onSubmit: (selected) => {
             document.getElementById("selected").value = selected.formatted();
