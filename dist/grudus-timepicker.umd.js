@@ -303,7 +303,12 @@ var HoursFace = function () {
         key: "removeSelected",
         value: function removeSelected() {
             this.selected.style.background = "transparent";
-            this.selected.style.color = this.options.clockItemColor;
+            this.selected.style.color = this.isInner() ? this.options.clockItemInnerColor : this.options.clockItemColor;
+        }
+    }, {
+        key: "isInner",
+        value: function isInner() {
+            return Array.from(this.items.innerClockItems).indexOf(this.selected) > -1;
         }
     }]);
     return HoursFace;

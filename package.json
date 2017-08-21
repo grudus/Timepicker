@@ -8,7 +8,7 @@
     "prebuild": "eslint src/**/*.js && npm run css",
     "build": "rollup -c rollup/es5.js && rollup -c rollup/umd.js  && rollup -c rollup/es6.js",
     "patch": "npm version patch && npm publish && git push --tags && git push",
-    "dev": "rollup -c rollup/es5.js",
+    "dev": "rollup -w -c rollup/es5.js",
     "fix": "eslint src/**/*.js --fix",
     "css": "postcss src/**/*.css --use autoprefixer --no-map  -d dist/"
   },
@@ -27,6 +27,7 @@
     "rollup-plugin-commonjs": "^8.1.0",
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-uglify": "^2.0.1",
+    "rollup-watch": "^4.3.1",
     "uglify-js": "^3.0.27"
   },
   "keywords": [
