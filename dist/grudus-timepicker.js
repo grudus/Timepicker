@@ -1,5 +1,27 @@
 /*! grudus-timepicker | (c) 2017-2017
  grudus | Apache-2.0 license (see LICENSE) */
+var hoursRegex = /^([0-1]?[0-9]|2[0-3])$/;
+var minutesRegex = /^([0-5]?[0-9])$/;
+var regex = /^([0-1]?[0-9]|2[0-3]):([0-5][0-9])$/;
+
+function extractTime(date) {
+    if (!date) return fromDate(new Date());else if (date instanceof Date) return fromDate(date);else if (hoursRegex.test(date.hours) && minutesRegex.test(date.minutes)) return { hours: parseInt(date.hours), minutes: parseInt(date.minutes) };else if (regex.test(date)) return fromRegex(date);else throw new TypeError("INVALID FORMAT: {" + JSON.stringify(date) + "}.\n            Time must be a Date or 'hh:MM' string or object with 'hours' and 'minutes' fields");
+}
+
+function fromRegex(date) {
+    var parsed = regex.exec(date);
+    return { hours: parseInt(parsed[1]), minutes: parseInt(parsed[2]) };
+}
+
+function fromDate(date) {
+    return { hours: date.getHours(), minutes: date.getMinutes() };
+}
+
+var formatTime = function (time) {
+    var extractedTime = extractTime(time);
+    return (extractedTime.hours < 10 ? "0" + extractedTime.hours : extractedTime.hours) + ":" + (extractedTime.minutes < 10 ? "0" + extractedTime.minutes : extractedTime.minutes);
+};
+
 var clockHtml = "<section class='g-time-wrapper'>\n" + "    <header class='g-head g-flex' id='g-head'>\n" + "        <section class='g-head-content'>\n" + "            <span class='g-current g-hour g-active g-pointer' id='g-hours'>21</span>\n" + "            <span class='g-current'>:</span>\n" + "            <span class='g-current g-minute g-pointer' id='g-minutes'>37</span>\n" + "        </section>\n" + "    </header>\n" + "\n" + "\n" + "    <section class='g-clock-wrapper g-flex' id='g-clock-wrapper'>\n" + "        <div class='g-clock' id='g-clock'>" + "            <span class='g-middle-dot' id='g-middle-dot'></span>\n" + "            <div class='g-hand-of-a-clock' id='g-hand-of-a-clock'></div>\n" + "            <div class='g-clock g-clock-inner' id='g-clock-inner'></div>\n" + "        </div>\n" + "    </section>\n" + "\n" + "\n" + "    <footer class='g-buttons g-flex' id='g-buttons'>\n" + "        <button id='g-time-cancel' class='g-button g-cancel g-pointer'>CANCEL</button>\n" + "        <button id='g-time-submit' class='g-button g-submit g-pointer'>OK</button>\n" + "    </footer>\n" + "\n" + "</section>";
 
 var clockId = "grudus-clock";
@@ -593,28 +615,6 @@ var ClockFace = function () {
     return ClockFace;
 }();
 
-var hoursRegex = /^([0-1]?[0-9]|2[0-3])$/;
-var minutesRegex = /^([0-5]?[0-9])$/;
-var regex = /^([0-1]?[0-9]|2[0-3]):([0-5][0-9])$/;
-
-function extractTime(date) {
-    if (!date) return fromDate(new Date());else if (date instanceof Date) return fromDate(date);else if (hoursRegex.test(date.hours) && minutesRegex.test(date.minutes)) return { hours: parseInt(date.hours), minutes: parseInt(date.minutes) };else if (regex.test(date)) return fromRegex(date);else throw new TypeError("INVALID FORMAT: {" + JSON.stringify(date) + "}.\n            Time must be a Date or 'hh:MM' string or object with 'hours' and 'minutes' fields");
-}
-
-function fromRegex(date) {
-    var parsed = regex.exec(date);
-    return { hours: parseInt(parsed[1]), minutes: parseInt(parsed[2]) };
-}
-
-function fromDate(date) {
-    return { hours: date.getHours(), minutes: date.getMinutes() };
-}
-
-var formatTime = function (time) {
-    var extractedTime = extractTime(time);
-    return (extractedTime.hours < 10 ? "0" + extractedTime.hours : extractedTime.hours) + ":" + (extractedTime.minutes < 10 ? "0" + extractedTime.minutes : extractedTime.minutes);
-};
-
 var Clock = function () {
     function Clock(options, time) {
         classCallCheck(this, Clock);
@@ -738,25 +738,31 @@ function changeColor(className, color) {
     }
 }
 
-function _showPicker() {
+function showPicker() {
     var config = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+    createDom();
 
     var options = Object.assign({}, Config.clockConfig, config);
     var time = extractTime(options.time);
-
-    var clockDiv = document.createElement("div");
-    clockDiv.id = Config.clockId;
-    clockDiv.innerHTML = clockHtml;
-    document.body.appendChild(clockDiv);
 
     var clock = new Clock(options, time);
     styleColors(options);
     clock.onStart();
 }
 
+function createDom() {
+    if (document.getElementById(Config.clockId)) throw Error("There is already one running grudus-timepicker instance!");
+
+    var clockDiv = document.createElement("div");
+    clockDiv.id = Config.clockId;
+    clockDiv.innerHTML = clockHtml;
+    document.body.appendChild(clockDiv);
+}
+
 var index = {
-    showPicker: function showPicker(config) {
-        return _showPicker(config);
+    showPicker: function showPicker$$1(config) {
+        return showPicker(config);
     },
     format: function format(time) {
         return formatTime(time);

@@ -9,6 +9,7 @@
     "build": "rollup -c rollup/es5.js && rollup -c rollup/umd.js  && rollup -c rollup/es6.js",
     "patch": "npm version patch && npm publish && git push --tags && git push",
     "dev": "rollup -c rollup/es5.js",
+    "fix": "eslint src/**/*.js --fix",
     "css": "postcss src/**/*.css --use autoprefixer --no-map  -d dist/"
   },
   "repository": {
